@@ -1,0 +1,20 @@
+1. Navigation with 3 options:
+    Tasks, History, About
+
+    All tasks(tasks, history) are save in MongoDB
+
+    Tasks:
+        -To buy
+        -To do
+        -To sell
+
+        All tasks can be folded/unfolded
+        All tasks can be marked as done -> move to History
+    
+    
+    History:
+        - All done Tasks
+        - All tasks can be marked as undone
+
+    About:
+        - Page with about, name, github, youtube chanell etc.
