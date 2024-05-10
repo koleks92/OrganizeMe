@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-function index() {
+function Index() {
     return (
         <View><Text>Hello</Text></View>
     )
 };
 
-export default index;
+export default Index;
