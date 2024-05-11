@@ -1,7 +1,12 @@
 1. Navigation with 3 options:
-    Tasks, History, About
+    Tasks, History, About, Add New Task
 
     All tasks(tasks, history) are save in MongoDB
+
+    Add New Task:
+        Add category (to buy, to do, to sell)
+        Add Task
+        Extra(Repeat)
 
     Tasks:
         -To buy
