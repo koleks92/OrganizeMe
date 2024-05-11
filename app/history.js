@@ -15,7 +15,6 @@ function History() {
         <SafeAreaView>
             <View>
                 <Button onPress={openDrawer} title="Menu" />
-
                 <Text>History</Text>
             </View>
         </SafeAreaView>

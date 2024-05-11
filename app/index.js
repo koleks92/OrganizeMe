@@ -15,7 +15,6 @@ function Index() {
         <SafeAreaView>
             <View>
                 <Button onPress={openDrawer} title="Menu" />
-
                 <Text>Tasks</Text>
             </View>
         </SafeAreaView>
