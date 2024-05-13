@@ -4,16 +4,10 @@ const scrW = Dimensions.get("screen").width
 
 function ButtonCustom({children, onPress}) {
     return (
-        <Pressable onPress={onPress} style={styles.root}>
+        <Pressable onPress={onPress}>
             <Text>{children}</Text>
         </Pressable>
     )
 }
 
 export default ButtonCustom;
-
-const styles = StyleSheet.create({
-    root: {
-        marginHorizontal: scrW * 0.04 
-    }
-})
