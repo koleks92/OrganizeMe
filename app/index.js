@@ -2,7 +2,7 @@
 
 import { DrawerActions } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import { Text, Modal} from "react-native";
+import { Text, Modal } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import ButtonCustom from "../components/UI/ButtonCustom";
 import Top from "../components/UI/Top";
 import MenuButton from "../components/UI/MenuButton";
 import { Sizes } from "../constants/Sizes";
-
+import { Ionicons } from "@expo/vector-icons";
 
 function Index() {
     // Add task modal visible state
@@ -29,11 +29,10 @@ function Index() {
         setModalVisible(!modalVisible);
     };
 
-
-
     return (
         <Background>
             <SafeAreaView>
+                {/* Modal */}
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -42,9 +41,13 @@ function Index() {
                     <AddTask closeModal={showCloseModal} />
                 </Modal>
                 <Top>
-                    <ButtonCustom onPress={openDrawer}><MenuButton size={Sizes.topButtonSize}/></ButtonCustom>
+                    {/*  Side menu */}
+                    <ButtonCustom onPress={openDrawer}>
+                        <MenuButton size={Sizes.topButtonSize} />
+                    </ButtonCustom>
+                    {/* Add task */}
                     <ButtonCustom onPress={showCloseModal}>
-                        AddTask
+                        <Ionicons name="add-circle-outline" size={Sizes.topButtonSize} />
                     </ButtonCustom>
                 </Top>
 
