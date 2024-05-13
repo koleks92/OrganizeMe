@@ -1,6 +1,8 @@
 import { View, StyleSheet, Dimensions } from "react-native";
+import { Sizes } from "../../constants/Sizes";
 
-const scrH = Dimensions.get("screen").height;
+
+
 
 function Top({children}) {
     return (
@@ -14,10 +16,11 @@ export default Top;
 
 const styles = StyleSheet.create({
     root: {
-        height: scrH * 0.05,
+        height: Sizes.scrH * 0.05,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
+        marginHorizontal: Sizes.scrW * 0.04
     }
 })
