@@ -4,7 +4,9 @@ import { DrawerActions } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import { View, Text, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Background from "../components/background/background";
+import Background from "../components/UI/Background";
+import ButtonCustom from "../components/UI/ButtonCustom";
+import Top from "../components/UI/Top";
 
 function About() {
     const navigation = useNavigation();
@@ -15,10 +17,10 @@ function About() {
     return (
         <Background>
             <SafeAreaView>
-                <View>
-                    <Button onPress={openDrawer} title="Menu" />
-                    <Text>About</Text>
-                </View>
+                <Top>
+                    <ButtonCustom onPress={openDrawer}>Menu</ButtonCustom>
+                </Top>
+                <Text>About</Text>
             </SafeAreaView>
         </Background>
     );
