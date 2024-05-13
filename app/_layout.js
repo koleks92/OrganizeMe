@@ -72,12 +72,6 @@ export default function Layout() {
                         ),
                     }}
                 />
-                <Drawer.Screen
-                    name="add_task"
-                    options={{
-                        drawerItemStyle: { display: 'none'}
-                    }}
-                />
             </Drawer>
         </GestureHandlerRootView>
     );
