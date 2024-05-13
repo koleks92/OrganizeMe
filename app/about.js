@@ -2,11 +2,14 @@
 
 import { DrawerActions } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import { View, Text, Button } from "react-native";
+import { Text, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
 import ButtonCustom from "../components/UI/ButtonCustom";
 import Top from "../components/UI/Top";
+import MenuButton from "../components/UI/MenuButton";
+
+const scrH = Dimensions.get("screen").height;
 
 function About() {
     const navigation = useNavigation();
@@ -14,11 +17,16 @@ function About() {
         navigation.dispatch(DrawerActions.openDrawer());
     };
 
+    // Buttons size
+    const buttonSize = scrH * 0.04;
+
     return (
         <Background>
             <SafeAreaView>
                 <Top>
-                    <ButtonCustom onPress={openDrawer}>Menu</ButtonCustom>
+                    <ButtonCustom onPress={openDrawer}>
+                        <MenuButton size={buttonSize} />
+                    </ButtonCustom>
                 </Top>
                 <Text>About</Text>
             </SafeAreaView>
