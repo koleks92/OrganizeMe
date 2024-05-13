@@ -6,7 +6,7 @@
     Add New Task:
         Add category (to buy, to do, to sell)
         Add Task
-        Extra(Repeat)
+        Extra comment
 
     Tasks:
         -To buy
