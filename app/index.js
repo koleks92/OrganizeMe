@@ -56,7 +56,8 @@ function Index() {
                         />
                     </ButtonCustom>
                 </Top>
-                    <AllTasks />
+                {/* All Tasks Component */}
+                <AllTasks />
             </SafeAreaView>
         </Background>
     );
