@@ -4,9 +4,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
 import { Colors } from "../constants/Colors";
 
+// Screen size
 const scrH = Dimensions.get("window").height;
 const scrW = Dimensions.get("window").width;
 
+// Font size based on a screen height
 const labelSize = scrH * 0.025;
 
 export default function Layout() {
@@ -25,7 +27,6 @@ export default function Layout() {
                     },
                     drawerActiveTintColor: Colors.warmWhite,
                     drawerActiveBackgroundColor: Colors.darkGreen,
-                    
                 }}
             >
                 <Drawer.Screen
