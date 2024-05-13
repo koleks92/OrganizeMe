@@ -2,7 +2,7 @@
 
 import { DrawerActions } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import { Text, Modal, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
 import { useState } from "react";
@@ -13,6 +13,7 @@ import MenuButton from "../components/UI/MenuButton";
 import { Sizes } from "../constants/Sizes";
 import { Ionicons } from "@expo/vector-icons";
 import AllTasks from "../components/Tasks/AllTasks";
+import { Colors } from "../constants/Colors";
 
 function Index() {
     // Add task modal visible state
@@ -53,6 +54,7 @@ function Index() {
                         <Ionicons
                             name="add-circle-outline"
                             size={Sizes.topButtonSize}
+                            color={Colors.darkGreen}
                         />
                     </ButtonCustom>
                 </Top>
