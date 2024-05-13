@@ -44,11 +44,10 @@ const styles = StyleSheet.create({
         width: Sizes.addTaskWidth,
         height: Sizes.addTaskHeight,
         backgroundColor: Colors.lightGreen,
-        padding: 0,
+        padding: Sizes.scrH * 0.01
     },
     topView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 6
     }
 });
