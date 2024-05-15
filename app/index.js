@@ -14,8 +14,15 @@ import { Sizes } from "../constants/Sizes";
 import { Ionicons } from "@expo/vector-icons";
 import AllTasks from "../components/Tasks/AllTasks";
 import { Colors } from "../constants/Colors";
+import { useFonts } from 'expo-font';
+
 
 function Index() {
+    const [fontsLoaded, fontError] = useFonts({
+        'RobotoMono': require('../assets/fonts/Roboto_Mono/RobotoMono.ttf'),
+      });
+    
+
     // Add task modal visible state
     const [modalVisible, setModalVisible] = useState(false);
 

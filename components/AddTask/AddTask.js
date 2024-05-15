@@ -1,24 +1,31 @@
 import { View, Text, Button, StyleSheet } from "react-native";
 import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
-import Top from "../UI/Top";
 import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
-
 
 function AddTask({ closeModal }) {
     return (
         <View style={styles.shadowWrapper}>
             <View style={styles.root}>
                 <View style={styles.topView}>
-                    <View></View>
-                    <ButtonCustom onPress={closeModal}><Ionicons
+                    <View style={styles.displayNone}><Ionicons
                             name="close-circle-outline"
                             size={Sizes.topButtonSize}
                             color={Colors.darkGreen}
-                        /></ButtonCustom>
+                        /></View>
+                <View style={styles.headTextView}>
+                    <Text style={styles.headText}>New Task</Text>
                 </View>
-                <Text>Add New Task</Text>
+                    <ButtonCustom onPress={closeModal}>
+                        <Ionicons
+                            name="close-circle-outline"
+                            size={Sizes.topButtonSize}
+                            color={Colors.darkGreen}
+                        />
+                    </ButtonCustom>
+                </View>
+                
             </View>
         </View>
     );
@@ -44,10 +51,23 @@ const styles = StyleSheet.create({
         width: Sizes.addTaskWidth,
         height: Sizes.addTaskHeight,
         backgroundColor: Colors.lightGreen,
-        padding: Sizes.scrH * 0.01
+        padding: Sizes.scrH * 0.01,
     },
     topView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    displayNone: {
+        opacity: 0
+    },
+    headText: {
+        fontSize: Sizes.scrH * 0.03,
+        fontFamily: "RobotoMono",
+        fontWeight: "bold",
+        color: Colors.warmWhite,
+    },
+    headTextView: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
