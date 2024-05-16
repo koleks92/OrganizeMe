@@ -6,7 +6,7 @@ import { Modal, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
 import { useState } from "react";
-import AddTask from "../components/addTask/addTask";
+import AddTask from "../components/AddTask/AddTask";
 import ButtonCustom from "../components/UI/ButtonCustom";
 import Top from "../components/UI/Top";
 import MenuButton from "../components/UI/MenuButton";

@@ -3,8 +3,21 @@ import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { SelectList } from 'react-native-dropdown-select-list'
+
 
 function AddTask({ closeModal }) {
+
+    const [selectedType, setSelectedType] = useState("");
+
+    const types = [
+        {key: '1', value: 'Do'},
+        {key: '2', value: 'Buy'},
+        {key: '3', value: 'Sell'},
+        {key: '4', value: 'Check'}
+    ]
+
     return (
         <View style={styles.shadowWrapper}>
             <View style={styles.root}>
@@ -25,7 +38,15 @@ function AddTask({ closeModal }) {
                         />
                     </ButtonCustom>
                 </View>
-                
+                <View style={styles.optionView}>
+                    <SelectList 
+                        setSelected={(val) => setSelectedType(val)}
+                        data={types}
+                        save="value"
+                        search={false}
+                        fontFamily="RobotoMono"
+                        placeholder="Select type"/>
+                </View>
             </View>
         </View>
     );
@@ -69,5 +90,8 @@ const styles = StyleSheet.create({
     headTextView: {
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    optionView: {
+        margin: Sizes.scrH * 0.02
     }
 });
