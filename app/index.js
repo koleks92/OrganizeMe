@@ -77,7 +77,7 @@ export default Index;
 const styles = StyleSheet.create({
     modalView: {
         flex: 1,
-        justifyContent: "center",
+        marginTop: Sizes.scrH * 0.1,
         alignItems: "center",
     },
 });
