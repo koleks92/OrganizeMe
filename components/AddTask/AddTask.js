@@ -52,6 +52,7 @@ function AddTask({ closeModal }) {
                             inputStyles={styles.textMain}
                             boxStyles={styles.selectInput}
                             dropdownStyles={styles.dropdownStyles}
+                            dropdownTextStyles={styles.textMain}
                         />
                     </View>
                     <View style={styles.optionView}>
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     },
     optionView: {
         height: Sizes.scrH * 0.06,
-        marginVertical: Sizes.scrH * 0.01
+        marginVertical: Sizes.scrH * 0.01,
     },
     optionViewExtra: {
         height: Sizes.scrH * 0.12,
@@ -162,6 +163,8 @@ const styles = StyleSheet.create({
         borderColor: Colors.darkGreen
     },
     dropdownStyles: {
-        backgroundColor: 'white'
+        height: Sizes.scrH * 0.21,
+        backgroundColor: 'white',
+        zIndex: 1, // Doesnt work on IOS
     }
 });
