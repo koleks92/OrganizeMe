@@ -9,6 +9,8 @@ import { SelectList } from "react-native-dropdown-select-list";
 function AddTask({ closeModal }) {
     const [selectedType, setSelectedType] = useState("");
     const [selectedName, setSelectedName] = useState("");
+    const [selectedShop, setSelectedShop] = useState("");
+    const [selectedExtra, setSelectedExtra] = useState("");
 
     const types = [
         { key: "1", value: "Do" },
@@ -46,17 +48,37 @@ function AddTask({ closeModal }) {
                             data={types}
                             save="value"
                             search={false}
-                            fontFamily="RobotoMono"
                             placeholder="Select type"
+                            inputStyles={styles.textMain}
                             boxStyles={styles.selectInput}
+                            dropdownStyles={styles.dropdownStyles}
                         />
                     </View>
                     <View style={styles.optionView}>
                         <TextInput
                             onChangeText={setSelectedName}
                             value={selectedName}
-                            style={[styles.selectInput, styles.textInput]}
+                            style={[styles.selectInput, styles.textInput, styles.textMain]}
                             placeholder="Enter name"
+
+                        />
+                    </View>
+                    <View style={styles.optionView}>
+                        <TextInput
+                            onChangeText={setSelectedShop}
+                            value={selectedShop}
+                            style={[styles.selectInput, styles.textInput, styles.textMain]}
+                            placeholder="Enter shop (optional)"
+
+                        />
+                    </View>
+                    <View style={styles.optionViewExtra}>
+                        <TextInput
+                            onChangeText={setSelectedExtra}
+                            value={selectedExtra}
+                            style={[styles.selectInputExtra, styles.textInput, styles.textMain]}
+                            placeholder="Extra info"
+                            multiline={true}
 
                         />
                     </View>
@@ -108,9 +130,14 @@ const styles = StyleSheet.create({
     optionsView: {
         flex: 1,
         margin: Sizes.scrH * 0.02,
+        justifyContent: 'center'
     },
     optionView: {
         height: Sizes.scrH * 0.06,
+        marginVertical: Sizes.scrH * 0.01
+    },
+    optionViewExtra: {
+        height: Sizes.scrH * 0.12,
         marginVertical: Sizes.scrH * 0.01
     },
     selectInput: {
@@ -121,8 +148,20 @@ const styles = StyleSheet.create({
         borderColor: Colors.darkGreen
     },
     textInput: {
-        flex: 1,
         paddingHorizontal: Sizes.scrW * 0.05,
-        fontFamily: 'RobotoMono'
     },
+    textMain: {
+        flex: 1,
+        fontFamily: 'RobotoMono',
+        fontSize: Sizes.scrH * 0.02
+    },
+    selectInputExtra: {
+        height: Sizes.scrH * 0.06,
+        borderWidth: 1,
+        borderRadius: Sizes.scrH * 0.015,
+        borderColor: Colors.darkGreen
+    },
+    dropdownStyles: {
+        backgroundColor: 'white'
+    }
 });

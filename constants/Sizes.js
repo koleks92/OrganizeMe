@@ -7,6 +7,6 @@ export const Sizes = {
     scrH: scrH,
     scrW: scrW,
     topButtonSize: scrH * 0.05,     // Top Options Buttons Size
-    addTaskHeight: scrH * 0.5,      // Add Task Modal Height
-    addTaskWidth: scrW * 0.8,       // Add Task Modal Width
+    addTaskHeight: scrH * 0.5,      // Add/Edit Task Modal Height
+    addTaskWidth: scrW * 0.8,       // Add/Edit Task Modal Width
 }
