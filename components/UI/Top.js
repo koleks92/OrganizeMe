@@ -16,7 +16,7 @@ export default Top;
 
 const styles = StyleSheet.create({
     root: {
-        height: Sizes.scrH * 0.05,
+        height: Sizes.topOptionsHeight,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
