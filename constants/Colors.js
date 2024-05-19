@@ -8,5 +8,5 @@ export const Colors = {
     oliveGreen: '#6B8E23',
     neutralGrey: '#BDBDBD',
     warmWhite: '#F5F5F5',
-    
+    warnRed: '#D32F2F',
 }
