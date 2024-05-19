@@ -3,17 +3,19 @@ import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import DropDownPicker from "react-native-dropdown-picker";
 
 function AddTask({ closeModal }) {
-    const [open, setOpen] = useState(false);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedName, setSelectedName] = useState("");
     const [selectedShop, setSelectedShop] = useState("");
     const [selectedExtra, setSelectedExtra] = useState("");
 
+    const [missingType, setMissingType] = useState(false);
+    const [missingName, setMissingName] = useState(false);
+
+    // Types of tasks
     const types = [
         { label: "Do", value: "1" },
         { label: "Buy", value: "2" },
@@ -21,17 +23,39 @@ function AddTask({ closeModal }) {
         { label: "Check", value: "4" },
     ];
 
+    // Check for save the task !
+    const saveCheck = () => {
+        if (selectedType === null || selectedName === "") {
+            if (selectedType === null) {
+                setMissingType(true);
+            } else {
+                setMissingType(false);
+            }
+            if (selectedName === "") {
+                setMissingName(true);
+            } else {
+                setMissingName(false);
+            }
+            return;
+        } else {
+            setMissingName(false);
+            setMissingType(false);
+            console.log("Ok, trying to save !")
+        }
+    }
+
     return (
         <View style={styles.shadowWrapper}>
             <View style={styles.root}>
+                {/* Top view bar */}
                 <View style={styles.topView}>
-                    <View style={styles.displayNone}>
+                    <ButtonCustom onPress={saveCheck}>
                         <Ionicons
-                            name="close-circle-outline"
+                            name="checkmark-circle-outline"
                             size={Sizes.topButtonSize}
                             color={Colors.darkGreen}
                         />
-                    </View>
+                    </ButtonCustom>
                     <View style={styles.headTextView}>
                         <Text style={styles.headText}>New Task</Text>
                     </View>
@@ -43,12 +67,13 @@ function AddTask({ closeModal }) {
                         />
                     </ButtonCustom>
                 </View>
+                {/*  Types dropdown */}
                 <View style={styles.optionsView}>
                     <View
                         style={[styles.optionViewDropdown, styles.optionView]}
                     >
                         <Dropdown
-                            style={styles.selectInput}
+                            style={[styles.selectInput, missingType && styles.warnBorder]}
                             placeholderStyle={styles.textInput}
                             selectedTextStyle={styles.textInput}
                             itemTextStyle={styles.dropdownTextStyles}
@@ -64,14 +89,16 @@ function AddTask({ closeModal }) {
                             activeColor={Colors.lightGreen}
                         />
                     </View>
+                    {/* Name input */}
                     <View style={styles.optionView}>
                         <TextInput
                             onChangeText={setSelectedName}
                             value={selectedName}
-                            style={[styles.selectInput, styles.textInput]}
+                            style={[styles.selectInput, styles.textInput, missingName && styles.warnBorder ]}
                             placeholder="Enter name"
                         />
                     </View>
+                    {/* Shop input */}
                     <View style={styles.optionView}>
                         <TextInput
                             onChangeText={setSelectedShop}
@@ -80,12 +107,13 @@ function AddTask({ closeModal }) {
                             placeholder="Enter shop (optional)"
                         />
                     </View>
+                    {/* Extra input */}
                     <View style={styles.optionViewExtra}>
                         <TextInput
                             onChangeText={setSelectedExtra}
                             value={selectedExtra}
                             style={[styles.selectInput, styles.textInput]}
-                            placeholder="Extra info"
+                            placeholder="Extra info (optional)"
                             multiline={true}
                         />
                     </View>
@@ -143,8 +171,9 @@ const styles = StyleSheet.create({
         height: Sizes.scrH * 0.06,
         marginVertical: Sizes.scrH * 0.01,
     },
-    optionViewDropdown: {
-        zIndex: 1,
+    warnBorder: {
+        borderColor: Colors.warnRed,
+        borderWidth: 3
     },
     optionViewExtra: {
         height: Sizes.scrH * 0.12,
@@ -174,6 +203,6 @@ const styles = StyleSheet.create({
     },
     dropdownTextStyles: {
         fontSize: Sizes.scrH * 0.02,
-        color: "Colors.darkGreen", // Ensure text color is visible
+        color: "Colors.darkGreen"
     },
 });
