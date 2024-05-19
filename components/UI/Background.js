@@ -1,5 +1,6 @@
 import { ImageBackground, StyleSheet, View } from "react-native";
 import { Colors } from "../../constants/Colors";
+import { Sizes } from "../../constants/Sizes";
 
 function Background({ children }) {
     return (
@@ -20,7 +21,7 @@ export default Background;
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1,
+        height: Sizes.scrH
       },
       backgroundImage: {
         flex: 1,
