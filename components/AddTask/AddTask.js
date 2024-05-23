@@ -110,6 +110,7 @@ function AddTask({ closeModal }) {
                             value={selectedName}
                             style={[styles.selectInput, styles.textInput, missingName && styles.warnBorder ]}
                             placeholder="Enter name"
+                            placeholderTextColor={Colors.darkGreen}
                         />
                     </View>
                     {/* Shop input */}
@@ -119,6 +120,7 @@ function AddTask({ closeModal }) {
                             value={selectedShop}
                             style={[styles.selectInput, styles.textInput]}
                             placeholder="Enter shop (optional)"
+                            placeholderTextColor={Colors.darkGreen}
                         />
                     </View>
                     {/* Extra input */}
@@ -129,6 +131,8 @@ function AddTask({ closeModal }) {
                             style={[styles.selectInput, styles.textInput]}
                             placeholder="Extra info (optional)"
                             multiline={true}
+                            placeholderTextColor={Colors.darkGreen}
+
                         />
                     </View>
                 </View>
@@ -201,7 +205,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.darkGreen,
     },
     textInput: {
-        paddingHorizontal: Sizes.scrW * 0.05,
+        paddingHorizontal: Sizes.scrW * 0.04,
         flex: 1,
         fontFamily: "RobotoMono",
         fontSize: Sizes.scrH * 0.02,
