@@ -47,8 +47,15 @@ function AddTask({ closeModal }) {
     }
 
     // Save to database function (last argument: false == not completed)
-    const saveTask = () => {
-        saveToDatabase(selectedType, selectedName, selectedShop, selectedExtra, false)
+    const saveTask = async () => {
+        try {
+            const result = await saveToDatabase(selectedType, selectedName, selectedShop, selectedExtra, false)
+            closeModal()
+        }
+        catch (error) {
+            console.log("Error: ", error)
+        }
+        
     }
  
     return (
