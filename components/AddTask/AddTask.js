@@ -5,6 +5,7 @@ import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
+import { saveToDatabase } from "../../services/api";
 
 function AddTask({ closeModal }) {
     const [selectedType, setSelectedType] = useState(null);
@@ -17,10 +18,10 @@ function AddTask({ closeModal }) {
 
     // Types of tasks
     const types = [
-        { label: "Do", value: "1" },
-        { label: "Buy", value: "2" },
-        { label: "Sell", value: "3" },
-        { label: "Check", value: "4" },
+        { label: "Do", value: "do" },
+        { label: "Buy", value: "buy" },
+        { label: "Sell", value: "sell" },
+        { label: "Check", value: "check" },
     ];
 
     // Check for save the task !
@@ -40,10 +41,16 @@ function AddTask({ closeModal }) {
         } else {
             setMissingName(false);
             setMissingType(false);
-            console.log("Ok, trying to save !")
+            // If everything ok, try to save
+            saveTask()
         }
     }
 
+    // Save to database function (last argument: false == not completed)
+    const saveTask = () => {
+        saveToDatabase(selectedType, selectedName, selectedShop, selectedExtra, false)
+    }
+ 
     return (
         <View style={styles.shadowWrapper}>
             <View style={styles.root}>
