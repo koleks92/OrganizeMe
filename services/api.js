@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://192.168.0.3:5000/newTask";
+const url = "http://192.168.0.3:5000/tasks";
 
 export async function saveToDatabase(type, name, shop, extra, completed) {
     try {
@@ -16,6 +16,6 @@ export async function saveToDatabase(type, name, shop, extra, completed) {
     catch (error) {
         console.error("Error: ", error)
     }
-    
-    
 }
+
+// Create delete function !
