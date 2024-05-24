@@ -45,7 +45,7 @@ export async function getAllHistory() {
 
 export async function deleteTask(id) {
     try {
-        const response = await axios.delete(url, id);
+        const response = await axios.delete(url + "/" + id);
         console.log(response);
     } catch (error) {
         console.error("Error:", error)
@@ -64,7 +64,15 @@ export async function getTask(id) {
 }
 
 // Edit task
-// TODO
+
+export async function editTask(id, name, type, shop, extra) {
+    try {
+        const response = await axios.put(url + "/" + id, name, type, shop, extra);
+        console.log(response)
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+}
 
 // Mark as completed/uncompleted
 // TODO
