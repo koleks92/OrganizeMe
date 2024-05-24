@@ -75,4 +75,12 @@ export async function editTask(id, name, type, shop, extra) {
 }
 
 // Mark as completed/uncompleted
-// TODO
+
+export async function markTask(id, completed) {
+    try {
+        const response = await axios.put(url + "/" + id + "/completed", completed);
+        console.log(response);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
