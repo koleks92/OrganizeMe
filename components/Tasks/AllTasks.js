@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import { getAllTasks } from "../../services/api";
 import { useEffect, useState } from "react";
+import TaskGroup from "./TasksGroup";
+import { Sizes } from "../../constants/Sizes";
 
 function AllTasks() {
     const [doTasks, setDoTasks] = useState([]);
@@ -44,16 +46,25 @@ function AllTasks() {
         fetchTasks();
     }, []);
 
-    console.log(sellTasks)
+    
 
 
     return (
-        <View>
+        <View style={styles.root}>
             <Text>All Tasks</Text>
+            <TaskGroup type="Do" tasks={doTasks}/>
+            <TaskGroup type="Buy" tasks={buyTasks}/>
+            <TaskGroup type="Sell" tasks={sellTasks}/>
+            <TaskGroup type="Check" tasks={checkTasks}/>
+
         </View>
     );
 }
 
 export default AllTasks;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    root: {
+        margin: Sizes.marginMainView
+    }
+});
