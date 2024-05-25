@@ -10,4 +10,5 @@ export const Sizes = {
     topOptionsHeight: scrH * 0.05,  // Top Options Component Height
     addTaskHeight: scrH * 0.5,      // Add/Edit Task Modal Height
     addTaskWidth: scrW * 0.8,       // Add/Edit Task Modal Width
+    marginMainView: scrW * 0.06     // Margin for root view for screens
 }
