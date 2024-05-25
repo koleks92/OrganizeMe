@@ -1,10 +1,11 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
-function TaskGroup() {
+function TaskGroup({type, tasks}) {
+    console.log(tasks)
+
     return (
         <View>
-            <Text>Task Group</Text>
-
+            <Text>{type}</Text>
         </View>
     );
 }
