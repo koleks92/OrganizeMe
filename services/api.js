@@ -24,7 +24,7 @@ export async function saveToDatabase(type, name, shop, extra, completed) {
 export async function getAllTasks() {
     try {
         const response = await axios.get(url);
-        console.log(response)
+        return response.data;
     } catch (error) {
         console.error("Error: ", error)
     }
