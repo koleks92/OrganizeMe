@@ -5,18 +5,16 @@ import TaskGroup from "./TasksGroup";
 import { Sizes } from "../../constants/Sizes";
 
 function AllTasks() {
-    const [doTasks, setDoTasks] = useState([]);
-    const [buyTasks, setBuyTasks] = useState([]);
-    const [sellTasks, setSellTasks] = useState([]);
-    const [checkTasks, setCheckTasks] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
     // Get all tasks
     async function fetchTasks() {
         try {
             // Fetch tasks
             const fetchedTasks = await getAllTasks();
-            // Save tasks
+            
 
+            // Save tasks
             for (let i = 0; i < fetchedTasks.length; i++) {
                 let newTask = {
                     id: fetchedTasks[i]._id,
@@ -27,15 +25,7 @@ function AllTasks() {
                     completed: fetchedTasks[i].completed,
                 };
                 
-                if (newTask.type == "do") {
-                    setDoTasks(prevTasks => [...prevTasks, newTask])
-                } else if (newTask.type == "buy") {
-                    setBuyTasks(prevTasks => [...prevTasks, newTask])
-                } else if (newTask.type == "sell") {
-                    setSellTasks(prevTasks => [...prevTasks, newTask])
-                } else if (newTask.type == "check") {
-                    setCheckTasks(prevTasks => [...prevTasks, newTask])
-                }
+                setTasks((prevTasks) => [...prevTasks, newTask])
             }
         } catch (error) {
             console.error("Error fetching tasks: ", error);
@@ -46,7 +36,10 @@ function AllTasks() {
         fetchTasks();
     }, []);
 
-    
+    const doTasks = tasks.filter((task) => task.type == "do");
+    const buyTasks = tasks.filter((task) => task.type == "buy");
+    const sellTasks = tasks.filter((task) => task.type == "sell");
+    const checkTasks = tasks.filter((task) => task.type == "check");
 
 
     return (
