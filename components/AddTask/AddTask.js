@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     root: {
         borderWidth: 1,
         borderColor: Colors.darkGreen,
-        borderRadius: 20,
+        borderRadius: Sizes.scrH * 0.015,
         width: Sizes.addTaskWidth,
         height: Sizes.addTaskHeight,
         backgroundColor: Colors.lightGreen,
