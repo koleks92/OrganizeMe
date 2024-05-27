@@ -1,7 +1,14 @@
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, StyleSheet, Text } from "react-native";
 import { Colors } from "../../constants/Colors";
 
-function Loading() {
+function Loading({error}) {
+    if (error) {
+        return (
+            <View style={styles.loadingView}>
+                <Text>Error loading !</Text>>
+            </View>
+        )
+    }
     return (
         <View style={styles.loadingView}>
             <ActivityIndicator size="large" color={Colors.darkGreen} />
