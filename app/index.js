@@ -2,7 +2,7 @@
 
 import { DrawerActions } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import { Modal, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
 import { useState } from "react";
@@ -36,6 +36,23 @@ function Index() {
     const showCloseModal = () => {
         setModalVisible(!modalVisible);
     };
+
+    // Render loading or error state if fonts are not loaded
+    if (!fontsLoaded) {
+        return (
+            <View style={styles.loadingView}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
+
+    if (fontError) {
+        return (
+            <View style={styles.loadingView}>
+                <Text>Error loading fonts</Text>
+            </View>
+        );
+    }
 
     return (
         <Background>
@@ -83,4 +100,9 @@ const styles = StyleSheet.create({
         marginTop: Sizes.topOptionsHeight,
         alignItems: "center",
     },
+    loadingView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
