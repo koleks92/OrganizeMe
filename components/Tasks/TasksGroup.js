@@ -49,7 +49,7 @@ function TaskGroup({ type, tasks }) {
 
     // Calculate correct height of the tasksViewContainer
     const heightMax =
-        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) + 2 * Sizes.tasksViewMP;
+        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) + 2 * Sizes.tasksViewMP + Sizes.taskHorizontalMargin * (tasks.length == 0 ? 0 : tasks.length);
 
     // Open Tasks Handler
     const handleOpenTasks = () => {
@@ -121,13 +121,7 @@ const styles = StyleSheet.create({
     tasksView: {
         top: -1,
         zIndex: 0,
-        borderColor: Colors.darkGreen,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderBottomLeftRadius: Sizes.scrH * 0.015,
-        borderBottomRightRadius: Sizes.scrH * 0.015,
         marginHorizontal: Sizes.scrW * 0.03,
         marginBottom: Sizes.tasksViewMP,
-        backgroundColor: Colors.lightGreen,
     },
 });
