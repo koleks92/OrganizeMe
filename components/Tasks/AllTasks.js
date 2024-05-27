@@ -4,13 +4,18 @@ import { useEffect, useState } from "react";
 import TaskGroup from "./TasksGroup";
 import { Sizes } from "../../constants/Sizes";
 import { ScrollView } from "react-native-gesture-handler";
+import Loading from "../UI/Loading";
 
-function AllTasks({focused}) {
+function AllTasks({ focused }) {
     const [tasks, setTasks] = useState([]);
-   
+    const [tasksLoading, setTasksLoading] = useState(false);
+
     // Get all tasks
     async function fetchTasks() {
         try {
+            // Set loading tasks
+            setTasksLoading(true);
+
             // Fetch tasks
             const fetchedTasks = await getAllTasks();
 
@@ -30,6 +35,9 @@ function AllTasks({focused}) {
                 formattedTasks.push(newTask);
             }
             setTasks(formattedTasks);
+
+            // Set tasks loading false
+            setTasksLoading(false);
         } catch (error) {
             console.error("Error fetching tasks: ", error);
         }
@@ -46,6 +54,14 @@ function AllTasks({focused}) {
     const sellTasks = tasks.filter((task) => task.type == "sell");
     const checkTasks = tasks.filter((task) => task.type == "check");
 
+    if (tasksLoading) {
+        return(
+            <View style={styles.root}>
+                <Loading />
+            </View>
+        );
+    }
+
     return (
         <ScrollView style={styles.root}>
             <TaskGroup type="Do" tasks={doTasks} />
@@ -61,5 +77,5 @@ export default AllTasks;
 const styles = StyleSheet.create({
     root: {
         margin: Sizes.marginMainView,
-    },
+    }
 });

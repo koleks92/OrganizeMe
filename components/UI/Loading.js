@@ -5,7 +5,7 @@ function Loading({error}) {
     if (error) {
         return (
             <View style={styles.loadingView}>
-                <Text>Error loading !</Text>>
+                <Text>Error loading !</Text>
             </View>
         )
     }
@@ -20,7 +20,6 @@ export default Loading;
 
 const styles = StyleSheet.create({
     loadingView: {
-        flex: 1,
         justifyContent: "center",
         alignItems: "center",
     }
