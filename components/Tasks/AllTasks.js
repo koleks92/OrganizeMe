@@ -61,6 +61,5 @@ export default AllTasks;
 const styles = StyleSheet.create({
     root: {
         margin: Sizes.marginMainView,
-        height: "100%",
     },
 });

@@ -38,7 +38,7 @@ function Index() {
     // Show/Close modal prop
     const showCloseModal = () => {
         setModalVisible(!modalVisible);
-        setFocused(!focused)
+        setFocused(!focused);
     };
 
     // Render loading or error state if fonts are not loaded
@@ -90,7 +90,7 @@ function Index() {
                     </ButtonCustom>
                 </Top>
                 {/* All Tasks Component */}
-                <AllTasks focused={focused}/>
+                <AllTasks focused={focused} />
             </SafeAreaView>
         </Background>
     );
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     },
     loadingView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+        justifyContent: "center",
+        alignItems: "center",
+    },
 });
