@@ -36,7 +36,6 @@ function AllTasks({focused}) {
     }
 
     useEffect(() => {
-        console.log(focused);
         if (focused) {
             fetchTasks();
         }
