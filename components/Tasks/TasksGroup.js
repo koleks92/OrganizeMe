@@ -67,7 +67,7 @@ function TaskGroup({ type, tasks }) {
     };
 
     return (
-        <View style={styles.shadowWrapper}>
+        <View>
             <Pressable
                 style={styles.typeView}
                 onPress={() => handleOpenTasks()}
@@ -95,16 +95,13 @@ function TaskGroup({ type, tasks }) {
 export default TaskGroup;
 
 const styles = StyleSheet.create({
-    shadowWrapper: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 6,
-    },
     typeView: {
+        marginHorizontal: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        elevation: 5,
         zIndex: 2,
         flexDirection: "row",
         borderColor: Colors.darkGreen,
@@ -112,7 +109,6 @@ const styles = StyleSheet.create({
         borderRadius: Sizes.scrH * 0.015,
         padding: Sizes.scrH * 0.015,
         backgroundColor: Colors.mediumGreen,
-        elevation: 5,
         justifyContent: "space-between",
         alignItems: "center",
     },
