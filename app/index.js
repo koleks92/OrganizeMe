@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AllTasks from "../components/Tasks/AllTasks";
 import { Colors } from "../constants/Colors";
 import { useFonts } from "expo-font";
+import Loading from "../components/UI/Loading";
 
 function Index() {
     // Load fonts
@@ -43,19 +44,11 @@ function Index() {
 
     // Render loading or error state if fonts are not loaded
     if (!fontsLoaded) {
-        return (
-            <View style={styles.loadingView}>
-                <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-        );
+        return <Loading />;
     }
 
     if (fontError) {
-        return (
-            <View style={styles.loadingView}>
-                <Text>Error loading fonts</Text>
-            </View>
-        );
+        return <Loading error={true} />;
     }
 
     return (
@@ -102,11 +95,6 @@ const styles = StyleSheet.create({
     modalView: {
         flex: 1,
         marginTop: Sizes.topOptionsHeight,
-        alignItems: "center",
-    },
-    loadingView: {
-        flex: 1,
-        justifyContent: "center",
         alignItems: "center",
     },
 });
