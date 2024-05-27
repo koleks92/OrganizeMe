@@ -49,7 +49,7 @@ function TaskGroup({ type, tasks }) {
 
     // Calculate correct height of the tasksViewContainer
     const heightMax =
-        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) + 2 * Sizes.tasksViewMP + Sizes.taskHorizontalMargin * (tasks.length == 0 ? 0 : tasks.length);
+        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) + 2 * Sizes.tasksViewMP + Sizes.taskHorizontalMargin * (tasks.length == 0 ? 0 : tasks.length * 2);
 
     // Open Tasks Handler
     const handleOpenTasks = () => {
