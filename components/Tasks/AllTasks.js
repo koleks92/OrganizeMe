@@ -5,15 +5,16 @@ import TaskGroup from "./TasksGroup";
 import { Sizes } from "../../constants/Sizes";
 import { ScrollView } from "react-native-gesture-handler";
 
-function AllTasks() {
+function AllTasks({focused}) {
     const [tasks, setTasks] = useState([]);
-
+   
     // Get all tasks
     async function fetchTasks() {
         try {
             // Fetch tasks
             const fetchedTasks = await getAllTasks();
-            
+
+            let formattedTasks = [];
 
             // Save tasks
             for (let i = 0; i < fetchedTasks.length; i++) {
@@ -25,31 +26,33 @@ function AllTasks() {
                     extra: fetchedTasks[i].extra,
                     completed: fetchedTasks[i].completed,
                 };
-                
-                setTasks((prevTasks) => [...prevTasks, newTask])
+
+                formattedTasks.push(newTask);
             }
+            setTasks(formattedTasks);
         } catch (error) {
             console.error("Error fetching tasks: ", error);
         }
     }
 
     useEffect(() => {
-        fetchTasks();
-    }, []);
+        console.log(focused);
+        if (focused) {
+            fetchTasks();
+        }
+    }, [focused]);
 
     const doTasks = tasks.filter((task) => task.type == "do");
     const buyTasks = tasks.filter((task) => task.type == "buy");
     const sellTasks = tasks.filter((task) => task.type == "sell");
     const checkTasks = tasks.filter((task) => task.type == "check");
 
-
     return (
         <ScrollView style={styles.root}>
-            <Text>All Tasks</Text>
-            <TaskGroup type="Do" tasks={doTasks}/>
-            <TaskGroup type="Buy" tasks={buyTasks}/>
-            <TaskGroup type="Sell" tasks={sellTasks}/>
-            <TaskGroup type="Check" tasks={checkTasks}/>
+            <TaskGroup type="Do" tasks={doTasks} />
+            <TaskGroup type="Buy" tasks={buyTasks} />
+            <TaskGroup type="Sell" tasks={sellTasks} />
+            <TaskGroup type="Check" tasks={checkTasks} />
         </ScrollView>
     );
 }
@@ -58,6 +61,7 @@ export default AllTasks;
 
 const styles = StyleSheet.create({
     root: {
-        margin: Sizes.marginMainView
-    }
+        margin: Sizes.marginMainView,
+        height: "100%",
+    },
 });
