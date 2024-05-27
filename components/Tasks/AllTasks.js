@@ -50,7 +50,6 @@ function AllTasks() {
             <TaskGroup type="Buy" tasks={buyTasks}/>
             <TaskGroup type="Sell" tasks={sellTasks}/>
             <TaskGroup type="Check" tasks={checkTasks}/>
-
         </ScrollView>
     );
 }
