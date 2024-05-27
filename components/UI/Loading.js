@@ -20,6 +20,7 @@ export default Loading;
 
 const styles = StyleSheet.create({
     loadingView: {
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
     }
