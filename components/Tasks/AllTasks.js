@@ -3,6 +3,7 @@ import { getAllTasks } from "../../services/api";
 import { useEffect, useState } from "react";
 import TaskGroup from "./TasksGroup";
 import { Sizes } from "../../constants/Sizes";
+import { ScrollView } from "react-native-gesture-handler";
 
 function AllTasks() {
     const [tasks, setTasks] = useState([]);
@@ -43,14 +44,14 @@ function AllTasks() {
 
 
     return (
-        <View style={styles.root}>
+        <ScrollView style={styles.root}>
             <Text>All Tasks</Text>
             <TaskGroup type="Do" tasks={doTasks}/>
             <TaskGroup type="Buy" tasks={buyTasks}/>
             <TaskGroup type="Sell" tasks={sellTasks}/>
             <TaskGroup type="Check" tasks={checkTasks}/>
 
-        </View>
+        </ScrollView>
     );
 }
 
