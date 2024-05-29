@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import Animated, {useSharedValue} from "react-native-reanimated";
+import { markTask } from "../../services/api";
 
 function Task({ task, empty }) {
     // Task press handler
@@ -10,8 +12,19 @@ function Task({ task, empty }) {
     };
 
     // Checkmark press handler
-    const checkmarkPressHandler = (task) => {
-        console.log("Checkmark " + task.id)
+    const checkmarkPressHandler = async (task) => {
+        let newCompleted;
+        if (task.completed === true ) {
+            newCompleted = false;
+        } else {
+            newCompleted = true;
+        }
+        try {
+            const response = await markTask(task.id, newCompleted);
+            console.log(response);
+        } catch (error) {
+            console.error("Error: ", error);
+        }
     }
 
     if (empty) {
