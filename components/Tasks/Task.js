@@ -2,30 +2,61 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import Animated, {useSharedValue} from "react-native-reanimated";
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withSequence,
+    withTiming,
+} from "react-native-reanimated";
 import { markTask } from "../../services/api";
+import { useState } from "react";
 
 function Task({ task, empty }) {
+    const [markName, setMarkName] = useState("checkmark-circle-outline");
+
     // Task press handler
     const taskPressHandler = (task) => {
         console.log("Click " + task.id);
     };
 
+    // Shared values
+    const scale = useSharedValue(1);
+
+    // Checkmark animation
+    const checkmarkAnimation = useAnimatedStyle(() => {
+        return {
+            transform: [{ scale: scale.value }],
+        };
+    });
+
     // Checkmark press handler
     const checkmarkPressHandler = async (task) => {
+        // Set task.completed
         let newCompleted;
-        if (task.completed === true ) {
+        if (task.completed === true) {
             newCompleted = false;
         } else {
             newCompleted = true;
         }
+
+        // Send API request to mark the task
         try {
             const response = await markTask(task.id, newCompleted);
             console.log(response);
+            
+            // Checkmark animation
+            scale.value = withSequence(
+                withTiming(1.2, { duration: 300 }),
+                withTiming(
+                    1,
+                    { duration: 300 },
+                    setMarkName("checkmark-circle")
+                )
+            );
         } catch (error) {
             console.error("Error: ", error);
         }
-    }
+    };
 
     if (empty) {
         return (
@@ -44,14 +75,18 @@ function Task({ task, empty }) {
                 >
                     <Text style={styles.text}>{task.name}</Text>
                 </Pressable>
-                <Pressable onPress={() => {
+                <Pressable
+                    onPress={() => {
                         checkmarkPressHandler(task);
-                    }}>  
-                    <Ionicons
-                        name="checkmark-circle-outline"
-                        size={Sizes.scrH * 0.03}
-                        color={Colors.darkGreen}
-                    />
+                    }}
+                >
+                    <Animated.View style={checkmarkAnimation}>
+                        <Ionicons
+                            name={markName}
+                            size={Sizes.scrH * 0.04}
+                            color={Colors.darkGreen}
+                        />
+                    </Animated.View>
                 </Pressable>
             </View>
         );
@@ -88,8 +123,8 @@ const styles = StyleSheet.create({
         shadowRadius: 0,
     },
     namePressable: {
-        flex: 1
-    },  
+        flex: 1,
+    },
     text: {
         fontFamily: "RobotoMono",
         fontSize: Sizes.scrH * 0.025,
