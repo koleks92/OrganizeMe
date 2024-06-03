@@ -13,5 +13,5 @@ export const Sizes = {
     marginMainView: scrW * 0.06,        // Margin for root view for screens,
     taskSmallHeight: scrH * 0.05,       // Task height for TasksGroup
     tasksViewMP: scrH * 0.01,           // Tasks View Margin Bottom/Padding
-    taskHorizontalMargin: scrH * 0.002  // Horizontal margin for each task view in tasksGroup
+    taskVerticalMargin: scrH * 0.002  // Horizontal margin for each task view in tasksGroup
 }
