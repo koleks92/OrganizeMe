@@ -64,10 +64,10 @@ function AllTasks({ focused }) {
 
     return (
         <ScrollView style={styles.root}>
-            <TaskGroup type="Do" tasks={doTasks} />
-            <TaskGroup type="Buy" tasks={buyTasks} />
-            <TaskGroup type="Sell" tasks={sellTasks} />
-            <TaskGroup type="Check" tasks={checkTasks} />
+            <TaskGroup type="Do" initialTasks={doTasks} />
+            <TaskGroup type="Buy" initialTasks={buyTasks} />
+            <TaskGroup type="Sell" initialTasks={sellTasks} />
+            <TaskGroup type="Check" initialTasks={checkTasks} />
         </ScrollView>
     );
 }
