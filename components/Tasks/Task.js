@@ -7,9 +7,11 @@ import Animated, {
     useSharedValue,
     withSequence,
     withTiming,
+    withSpring,
+    runOnJS,
 } from "react-native-reanimated";
 import { markTask } from "../../services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Task({ task, empty }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
@@ -20,42 +22,74 @@ function Task({ task, empty }) {
     };
 
     // Shared values
-    const scale = useSharedValue(1);
+    const scale = useSharedValue(1); // Checkmark scale
+    const translateX = useSharedValue(0); // Task root position X
+    const height = useSharedValue(Sizes.taskSmallHeight);
 
-    // Checkmark animation
-    const checkmarkAnimation = useAnimatedStyle(() => {
+    // Checkmark animation style
+    const checkmarkAnimationStyle = useAnimatedStyle(() => {
         return {
             transform: [{ scale: scale.value }],
         };
     });
 
+    const slideoutAnimationStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: translateX.value }],
+            height: height.value,
+        };
+    });
+
+    // Checkmark animation
+    const checkmarkAnimation = () => {
+        scale.value = withSequence(
+            withTiming(1.2, { duration: 300 }),
+            withTiming(1, { duration: 300 }, () => {
+                runOnJS(setMarkName)("checkmark-circle");
+                runOnJS(slideoutAnimation)();
+            })
+        );
+    };
+
+    // Slideout animation
+    const slideoutAnimation = () => {
+        translateX.value = withSequence(
+            withTiming(-50, { duration: 100 }),
+            withTiming(1000, { duration: 900 })
+        );
+        height.value = withTiming(0, { duration: 1000 });
+    };
+
     // Checkmark press handler
     const checkmarkPressHandler = async (task) => {
-        // Set task.completed
-        let newCompleted;
-        if (task.completed === true) {
-            newCompleted = false;
-        } else {
-            newCompleted = true;
-        }
+        // // Set task.completed
+        // let newCompleted;
+        // if (task.completed === true) {
+        //     newCompleted = false;
+        // } else {
+        //     newCompleted = true;
+        // }
 
-        // Send API request to mark the task
-        try {
-            const response = await markTask(task.id, newCompleted);
-            console.log(response);
-            
-            // Checkmark animation
-            scale.value = withSequence(
-                withTiming(1.2, { duration: 300 }),
-                withTiming(
-                    1,
-                    { duration: 300 },
-                    setMarkName("checkmark-circle")
-                )
-            );
-        } catch (error) {
-            console.error("Error: ", error);
-        }
+        checkmarkAnimation();
+
+        // // Send API request to mark the task
+        // try {
+        //     const response = await markTask(task.id, newCompleted);
+
+        //     // Checkmark animation
+        //     scale.value = withSequence(
+        //         withTiming(1.2, { duration: 300 }),
+        //         withTiming(
+        //             1,
+        //             { duration: 300 },
+        //             setMarkName("checkmark-circle")
+        //         )
+        //     );
+
+        //
+        // } catch (error) {
+        //     console.error("Error: ", error);
+        // }
     };
 
     if (empty) {
@@ -66,7 +100,7 @@ function Task({ task, empty }) {
         );
     } else {
         return (
-            <View style={styles.root}>
+            <Animated.View style={[styles.root, slideoutAnimationStyle]}>
                 <Pressable
                     style={styles.namePressable}
                     onPress={() => {
@@ -80,7 +114,7 @@ function Task({ task, empty }) {
                         checkmarkPressHandler(task);
                     }}
                 >
-                    <Animated.View style={checkmarkAnimation}>
+                    <Animated.View style={checkmarkAnimationStyle}>
                         <Ionicons
                             name={markName}
                             size={Sizes.scrH * 0.04}
@@ -88,7 +122,7 @@ function Task({ task, empty }) {
                         />
                     </Animated.View>
                 </Pressable>
-            </View>
+            </Animated.View>
         );
     }
 }

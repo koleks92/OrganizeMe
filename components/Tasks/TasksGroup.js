@@ -30,9 +30,9 @@ function TaskGroup({ type, tasks }) {
     const slidingStyle = useAnimatedStyle(() => {
         return {
             height: height.value,
-            overflow: 'hidden',
+            overflow: "hidden",
             padding: padding.value,
-            visible: visible.value
+            visible: visible.value,
         };
     });
 
@@ -40,16 +40,20 @@ function TaskGroup({ type, tasks }) {
     let tasksToRender;
 
     if (tasks.length === 0) {
-        tasksToRender = <Task empty={true} />;
+        tasksToRender = <Task empty={true}/>;
     } else {
         tasksToRender = tasks.map((task) => {
-            return <Task task={task} key={task.id} />;
+            return (
+                    <Task task={task} key={task.id}/>
+            );
         });
     }
 
     // Calculate correct height of the tasksViewContainer
     const heightMax =
-        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) + 2 * Sizes.tasksViewMP + Sizes.taskHorizontalMargin * (tasks.length == 0 ? 0 : tasks.length * 2);
+        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) +
+        2 * Sizes.tasksViewMP +
+        Sizes.taskHorizontalMargin * (tasks.length == 0 ? 0 : tasks.length * 2);
 
     // Open Tasks Handler
     const handleOpenTasks = () => {
@@ -97,7 +101,7 @@ export default TaskGroup;
 const styles = StyleSheet.create({
     typeView: {
         marginHorizontal: 2,
-        shadowColor: '#000',
+        shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.5,
         shadowRadius: 2,
