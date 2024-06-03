@@ -8,7 +8,7 @@ import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withSpring,
-    withTiming
+    withTiming,
 } from "react-native-reanimated";
 
 function TaskGroup({ type, tasks }) {
@@ -19,6 +19,9 @@ function TaskGroup({ type, tasks }) {
     const height = useSharedValue(0);
     const padding = useSharedValue(0);
     const visible = useSharedValue(0);
+
+    // Tasks length
+    let tasksLength = tasks.length;
 
     // Animation
     const rotationStyle = useAnimatedStyle(() => {
@@ -36,24 +39,48 @@ function TaskGroup({ type, tasks }) {
         };
     });
 
+    // Calculate correct height of the tasksViewContainer
+    let heightMax =
+        Sizes.taskSmallHeight * (tasksLength == 0 ? 1 : tasksLength) +
+        2 * Sizes.tasksViewMP +
+        Sizes.taskHorizontalMargin * (tasksLength == 0 ? 0 : tasksLength * 2);
+
+    const removedData = (data) => {
+        if (data == true) {
+            handleRemoveOneTask();
+        }
+    };
+
     // Create a component with tasks to render
     let tasksToRender;
 
-    if (tasks.length === 0) {
-        tasksToRender = <Task empty={true}/>;
+    if (tasksLength === 0) {
+        tasksToRender = <Task empty={true} removedData={removedData} />;
     } else {
         tasksToRender = tasks.map((task) => {
-            return (
-                    <Task task={task} key={task.id}/>
-            );
+            return <Task task={task} key={task.id} removedData={removedData} />;
         });
     }
 
-    // Calculate correct height of the tasksViewContainer
-    const heightMax =
-        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) +
-        2 * Sizes.tasksViewMP +
-        Sizes.taskHorizontalMargin * (tasks.length == 0 ? 0 : tasks.length * 2);
+    // FIX WHEN NO TASKS
+
+    // Handle remove on task
+    const handleRemoveOneTask = () => {
+        tasksLength = tasksLength - 1;
+
+        if (tasksLength === 0) {
+            tasksToRender = <Task empty={true} removedData={removedData} />;
+        }
+
+        // Calculate correct height of the tasksViewContainer
+        let heightMax =
+            Sizes.taskSmallHeight * (tasksLength == 0 ? 1 : tasksLength) +
+            2 * Sizes.tasksViewMP +
+            Sizes.taskHorizontalMargin *
+                (tasksLength == 0 ? 0 : tasksLength * 2);
+
+        height.value = withTiming(heightMax, {duration: 1000})
+    };
 
     // Open Tasks Handler
     const handleOpenTasks = () => {

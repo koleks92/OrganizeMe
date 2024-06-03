@@ -13,13 +13,16 @@ import Animated, {
 import { markTask } from "../../services/api";
 import { useEffect, useState } from "react";
 
-function Task({ task, empty }) {
+function Task({ task, empty, removedData }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
+    const [removed, setRemoved] = useState();
 
     // Task press handler
     const taskPressHandler = (task) => {
         console.log("Click " + task.id);
     };
+
+    removedData(removed);
 
     // Shared values
     const scale = useSharedValue(1); // Checkmark scale
@@ -47,6 +50,7 @@ function Task({ task, empty }) {
             withTiming(1, { duration: 300 }, () => {
                 runOnJS(setMarkName)("checkmark-circle");
                 runOnJS(slideoutAnimation)();
+                runOnJS(setRemoved)(true);
             })
         );
     };
