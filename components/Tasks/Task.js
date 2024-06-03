@@ -15,14 +15,18 @@ import { useEffect, useState } from "react";
 
 function Task({ task, empty, removedData }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
-    const [removed, setRemoved] = useState();
+    const [removed, setRemoved] = useState(false);
 
     // Task press handler
     const taskPressHandler = (task) => {
         console.log("Click " + task.id);
     };
 
-    removedData(removed);
+    if (!empty) {
+        if (removed) {
+            removedData(task.id);
+        }
+    }
 
     // Shared values
     const scale = useSharedValue(1); // Checkmark scale
@@ -58,7 +62,7 @@ function Task({ task, empty, removedData }) {
     // Slideout animation
     const slideoutAnimation = () => {
         translateX.value = withSequence(
-            withTiming(-50, { duration: 100 }),
+            withTiming(-10, { duration: 100 }),
             withTiming(1000, { duration: 900 })
         );
         height.value = withTiming(0, { duration: 1000 });
