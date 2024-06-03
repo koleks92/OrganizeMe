@@ -36,30 +36,29 @@ function TaskGroup({ type, initialTasks }) {
             visible: visible.value,
         };
     });
-    
+
+    const calculateHeightMax = (length) => {
+        return (
+            Sizes.taskSmallHeight * (length == 0 ? 1 : length) +
+        Sizes.tasksViewMP +
+        Sizes.taskVerticalMargin * (length == 0 ? 0 : length * 2)
+        )
+    }
 
     // Calculate correct height of the tasksViewContainer
-    let heightMax =
-        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) +
-        Sizes.tasksViewMP +
-        Sizes.taskVerticalMargin * (tasks.length == 0 ? 0 : tasks.length * 2);
+    let heightMax = calculateHeightMax(tasks.length);
 
-    // Remove one task handler
-    const removeOneTaskHandler = (data) => {
+    const removedData = (taskId) => {
+        
+        let heightMax = calculateHeightMax(tasks.length - 1);
+
+        height.value = withTiming(heightMax, {duration: 2000});
+
+        // Error about tasks
         setTasks((prevTasks) => {
-            const updatedTasks = prevTasks.filter((task) => task.id !== data);
+            const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
             return updatedTasks;
         });
-        if ((tasks.length - 1) == 0) {
-            return;
-        } else {
-            height.value = withTiming(heightMax - (Sizes.taskSmallHeight + Sizes.taskVerticalMargin), {duration: 1000})
-        }
-        
-    };
-
-    const removedData = (data) => {
-        removeOneTaskHandler(data);
     };
 
     // Create a component with tasks to render
@@ -72,8 +71,6 @@ function TaskGroup({ type, initialTasks }) {
             return <Task task={task} key={task.id} removedData={removedData} />;
         });
     }
-
-    // FIX WHEN NO TASKS
 
     // Open Tasks Handler
     const handleOpenTasks = () => {
