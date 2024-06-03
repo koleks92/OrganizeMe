@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 2,
         elevation: 2,
-        marginVertical: Sizes.taskHorizontalMargin,
+        marginVertical: Sizes.taskVerticalMargin,
         height: Sizes.taskSmallHeight,
         borderColor: Colors.darkGreen,
         borderWidth: 1,

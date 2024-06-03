@@ -3,7 +3,7 @@ import Task from "./Task";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -11,17 +11,15 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 
-function TaskGroup({ type, tasks }) {
+function TaskGroup({ type, initialTasks }) {
     const [tasksOpen, setTasksOpen] = useState(false);
+    const [tasks, setTasks] = useState(initialTasks);
 
     // Share values for tasksView animation
     const rotation = useSharedValue(0);
     const height = useSharedValue(0);
     const padding = useSharedValue(0);
     const visible = useSharedValue(0);
-
-    // Tasks length
-    let tasksLength = tasks.length;
 
     // Animation
     const rotationStyle = useAnimatedStyle(() => {
@@ -38,24 +36,37 @@ function TaskGroup({ type, tasks }) {
             visible: visible.value,
         };
     });
+    
 
     // Calculate correct height of the tasksViewContainer
     let heightMax =
-        Sizes.taskSmallHeight * (tasksLength == 0 ? 1 : tasksLength) +
-        2 * Sizes.tasksViewMP +
-        Sizes.taskHorizontalMargin * (tasksLength == 0 ? 0 : tasksLength * 2);
+        Sizes.taskSmallHeight * (tasks.length == 0 ? 1 : tasks.length) +
+        Sizes.tasksViewMP +
+        Sizes.taskVerticalMargin * (tasks.length == 0 ? 0 : tasks.length * 2);
+
+    // Remove one task handler
+    const removeOneTaskHandler = (data) => {
+        setTasks((prevTasks) => {
+            const updatedTasks = prevTasks.filter((task) => task.id !== data);
+            return updatedTasks;
+        });
+        if ((tasks.length - 1) == 0) {
+            return;
+        } else {
+            height.value = withTiming(heightMax - (Sizes.taskSmallHeight + Sizes.taskVerticalMargin), {duration: 1000})
+        }
+        
+    };
 
     const removedData = (data) => {
-        if (data == true) {
-            handleRemoveOneTask();
-        }
+        removeOneTaskHandler(data);
     };
 
     // Create a component with tasks to render
     let tasksToRender;
 
-    if (tasksLength === 0) {
-        tasksToRender = <Task empty={true} removedData={removedData} />;
+    if (tasks.length == 0) {
+        tasksToRender = <Task empty={true} />;
     } else {
         tasksToRender = tasks.map((task) => {
             return <Task task={task} key={task.id} removedData={removedData} />;
@@ -63,24 +74,6 @@ function TaskGroup({ type, tasks }) {
     }
 
     // FIX WHEN NO TASKS
-
-    // Handle remove on task
-    const handleRemoveOneTask = () => {
-        tasksLength = tasksLength - 1;
-
-        if (tasksLength === 0) {
-            tasksToRender = <Task empty={true} removedData={removedData} />;
-        }
-
-        // Calculate correct height of the tasksViewContainer
-        let heightMax =
-            Sizes.taskSmallHeight * (tasksLength == 0 ? 1 : tasksLength) +
-            2 * Sizes.tasksViewMP +
-            Sizes.taskHorizontalMargin *
-                (tasksLength == 0 ? 0 : tasksLength * 2);
-
-        height.value = withTiming(heightMax, {duration: 1000})
-    };
 
     // Open Tasks Handler
     const handleOpenTasks = () => {
@@ -92,7 +85,7 @@ function TaskGroup({ type, tasks }) {
             padding.value = withSpring(0);
         } else if (!tasksOpen) {
             rotation.value = withSpring(180);
-            height.value = withSpring(heightMax);
+            height.value = withTiming(heightMax);
             padding.value = withSpring(Sizes.tasksViewMP);
         }
     };
@@ -151,7 +144,7 @@ const styles = StyleSheet.create({
     },
     tasksView: {
         top: -1,
-        zIndex: 0,
+        zIndex: 3,
         marginHorizontal: Sizes.scrW * 0.03,
         marginBottom: Sizes.tasksViewMP,
     },
