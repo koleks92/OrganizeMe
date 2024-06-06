@@ -3,7 +3,7 @@ import Task from "./Task";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -14,14 +14,53 @@ import Animated, {
 function TaskGroup({ type, initialTasks }) {
     const [tasksOpen, setTasksOpen] = useState(false);
     const [tasks, setTasks] = useState(initialTasks);
+    const [tasksToRender, setTasksToRender] = useState([]);
 
-    // Share values for tasksView animation
+    // Shared values for tasksView animation
     const rotation = useSharedValue(0);
     const height = useSharedValue(0);
     const padding = useSharedValue(0);
-    const visible = useSharedValue(0);
 
-    // Animation
+    // Calcluate maximum height of the tasks view container
+    const calculateHeightMax = useCallback((length) => {
+        return (
+            Sizes.taskSmallHeight * (length === 0 ? 1 : length) +
+            Sizes.tasksViewMP +
+            Sizes.taskVerticalMargin * (length === 0 ? 0 : length * 2)
+        );
+    }, []);
+
+    // Create array of tasks to render
+    const createTasksToRender = useCallback((tasks) => {
+        if (tasks.length === 0) {
+            setTasksToRender([<Task empty={true} key="empty" />]);
+        } else {
+            setTasksToRender(tasks.map((task) => (
+                <Task task={task} key={task.id} removedData={removedData} />
+            )));
+        }
+    }, [removedData]);
+
+    // Remove one task from array/state
+    const removedData = useCallback((taskId) => {
+        setTasks((prevTasks) => {
+            const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
+            createTasksToRender(updatedTasks);
+            return updatedTasks;
+        });
+    }, []);
+
+    // Create new array of tasks to render, when tasks state changes
+    useEffect(() => {
+        createTasksToRender(tasks);
+
+        if (tasksOpen) {
+            const heightMax = calculateHeightMax(tasks.length);
+            height.value = withTiming(heightMax);
+        }
+    }, [tasks]);
+
+    // Animation styles
     const rotationStyle = useAnimatedStyle(() => {
         return {
             transform: [{ rotate: `${rotation.value}deg` }],
@@ -33,46 +72,10 @@ function TaskGroup({ type, initialTasks }) {
             height: height.value,
             overflow: "hidden",
             padding: padding.value,
-            visible: visible.value,
         };
     });
 
-    const calculateHeightMax = (length) => {
-        return (
-            Sizes.taskSmallHeight * (length == 0 ? 1 : length) +
-        Sizes.tasksViewMP +
-        Sizes.taskVerticalMargin * (length == 0 ? 0 : length * 2)
-        )
-    }
-
-    // Calculate correct height of the tasksViewContainer
-    let heightMax = calculateHeightMax(tasks.length);
-
-    const removedData = (taskId) => {
-        
-        let heightMax = calculateHeightMax(tasks.length - 1);
-
-        height.value = withTiming(heightMax, {duration: 2000});
-
-        // Error about tasks
-        setTasks((prevTasks) => {
-            const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
-            return updatedTasks;
-        });
-    };
-
-    // Create a component with tasks to render
-    let tasksToRender;
-
-    if (tasks.length == 0) {
-        tasksToRender = <Task empty={true} />;
-    } else {
-        tasksToRender = tasks.map((task) => {
-            return <Task task={task} key={task.id} removedData={removedData} />;
-        });
-    }
-
-    // Open Tasks Handler
+    // Open/Close tasks accordion
     const handleOpenTasks = () => {
         setTasksOpen(!tasksOpen);
 
@@ -80,7 +83,8 @@ function TaskGroup({ type, initialTasks }) {
             rotation.value = withSpring(0);
             height.value = withTiming(0);
             padding.value = withSpring(0);
-        } else if (!tasksOpen) {
+        } else {
+            const heightMax = calculateHeightMax(tasks.length);
             rotation.value = withSpring(180);
             height.value = withTiming(heightMax);
             padding.value = withSpring(Sizes.tasksViewMP);
@@ -91,7 +95,7 @@ function TaskGroup({ type, initialTasks }) {
         <View>
             <Pressable
                 style={styles.typeView}
-                onPress={() => handleOpenTasks()}
+                onPress={handleOpenTasks}
             >
                 <View>
                     <Text style={styles.typeTitle}>{type}</Text>

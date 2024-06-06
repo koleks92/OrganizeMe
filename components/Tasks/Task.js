@@ -15,18 +15,12 @@ import { useEffect, useState } from "react";
 
 function Task({ task, empty, removedData }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
-    const [removed, setRemoved] = useState(false);
 
     // Task press handler
     const taskPressHandler = (task) => {
         console.log("Click " + task.id);
     };
 
-    if (!empty) {
-        if (removed) {
-            removedData(task.id);
-        }
-    }
 
     // Shared values
     const scale = useSharedValue(1); // Checkmark scale
@@ -54,50 +48,55 @@ function Task({ task, empty, removedData }) {
             withTiming(1, { duration: 300 }, () => {
                 runOnJS(setMarkName)("checkmark-circle");
                 runOnJS(slideoutAnimation)();
-                runOnJS(setRemoved)(true);
             })
         );
     };
-
-    // Slideout animation
+    
     const slideoutAnimation = () => {
         translateX.value = withSequence(
             withTiming(-10, { duration: 100 }),
-            withTiming(1000, { duration: 900 })
+            withTiming(600, { duration: 600 })
         );
-        height.value = withTiming(0, { duration: 1000 });
+        
+        height.value = withSequence(
+            withTiming(0, { duration: 500 }, () => {
+                runOnJS(removedData)(task.id)
+            }),
+        );
     };
+
+
 
     // Checkmark press handler
     const checkmarkPressHandler = async (task) => {
-        // // Set task.completed
-        // let newCompleted;
-        // if (task.completed === true) {
-        //     newCompleted = false;
-        // } else {
-        //     newCompleted = true;
-        // }
+        // Set task.completed
+        let newCompleted;
+        if (task.completed === true) {
+            newCompleted = false;
+        } else {
+            newCompleted = true;
+        }
 
         checkmarkAnimation();
 
-        // // Send API request to mark the task
-        // try {
-        //     const response = await markTask(task.id, newCompleted);
+        // Send API request to mark the task
+        try {
+            const response = await markTask(task.id, newCompleted);
 
-        //     // Checkmark animation
-        //     scale.value = withSequence(
-        //         withTiming(1.2, { duration: 300 }),
-        //         withTiming(
-        //             1,
-        //             { duration: 300 },
-        //             setMarkName("checkmark-circle")
-        //         )
-        //     );
+            // Checkmark animation
+            scale.value = withSequence(
+                withTiming(1.2, { duration: 300 }),
+                withTiming(
+                    1,
+                    { duration: 300 },
+                    setMarkName("checkmark-circle")
+                )
+            );
 
-        //
-        // } catch (error) {
-        //     console.error("Error: ", error);
-        // }
+        
+        } catch (error) {
+            console.error("Error: ", error);
+        }
     };
 
     if (empty) {
