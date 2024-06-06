@@ -28,6 +28,7 @@ function Task({ task, empty, removedData }) {
     const height = useSharedValue(Sizes.taskSmallHeight); // Height of task container
     const marginVertical = useSharedValue(Sizes.taskVerticalMargin) // Margin vertial of task container
     const borderWidth = useSharedValue(1) // Border width of task container
+    const opacity = useSharedValue(1)
 
     // Checkmark animation style
     const checkmarkAnimationStyle = useAnimatedStyle(() => {
@@ -41,7 +42,8 @@ function Task({ task, empty, removedData }) {
             transform: [{ translateX: translateX.value }],
             height: height.value,
             marginVertical: marginVertical.value,
-            borderWidth: borderWidth.value
+            borderWidth: borderWidth.value,
+            opacity: opacity.value
         };
     });
 
@@ -57,6 +59,8 @@ function Task({ task, empty, removedData }) {
     };
 
     const slideoutAnimation = () => {
+        opacity.value = withTiming(0);
+
         translateX.value = withSequence(
             withTiming(-10, { duration: 100 }),
             withTiming(600, { duration: 600 })
@@ -76,34 +80,34 @@ function Task({ task, empty, removedData }) {
 
     // Checkmark press handler
     const checkmarkPressHandler = async (task) => {
-        // // Set task.completed
-        // let newCompleted;
-        // if (task.completed === true) {
-        //     newCompleted = false;
-        // } else {
-        //     newCompleted = true;
-        // }
+        // Set task.completed
+        let newCompleted;
+        if (task.completed === true) {
+            newCompleted = false;
+        } else {
+            newCompleted = true;
+        }
 
         checkmarkAnimation();
 
-        // // Send API request to mark the task
-        // try {
-        //     const response = await markTask(task.id, newCompleted);
+        // Send API request to mark the task
+        try {
+            const response = await markTask(task.id, newCompleted);
 
-        //     // Checkmark animation
-        //     scale.value = withSequence(
-        //         withTiming(1.2, { duration: 300 }),
-        //         withTiming(
-        //             1,
-        //             { duration: 300 },
-        //             setMarkName("checkmark-circle")
-        //         )
-        //     );
+            // Checkmark animation
+            scale.value = withSequence(
+                withTiming(1.2, { duration: 300 }),
+                withTiming(
+                    1,
+                    { duration: 300 },
+                    setMarkName("checkmark-circle")
+                )
+            );
 
         
-        // } catch (error) {
-        //     console.error("Error: ", error);
-        // }
+        } catch (error) {
+            console.error("Error: ", error);
+        }
     };
 
     if (empty) {
