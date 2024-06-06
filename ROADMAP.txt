@@ -23,3 +23,8 @@
 
     About:
         - Page with about, name, github, youtube chanell etc.
+
+2. Future fixes:
+
+    - TaskGroup and Task borderWidth better with 0 or 1 ?
+    - Task slideout = 
