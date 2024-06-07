@@ -7,11 +7,10 @@ import Animated, {
     useSharedValue,
     withSequence,
     withTiming,
-    withSpring,
     runOnJS,
 } from "react-native-reanimated";
 import { markTask } from "../../services/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Task({ task, empty, removedData }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
@@ -157,7 +156,6 @@ const styles = StyleSheet.create({
         marginVertical: Sizes.taskVerticalMargin,
         height: Sizes.taskSmallHeight,
         borderColor: Colors.darkGreen,
-        borderWidth: 1,
         borderRadius: Sizes.scrW * 0.02,
         alignItems: "center",
         flexDirection: "row",
