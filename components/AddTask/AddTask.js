@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { saveToDatabase } from "../../services/api";
 
-function AddTask({ closeModal }) {
+function AddTask({ closeModal, savedTask }) {
     const [selectedType, setSelectedType] = useState(null);
     const [selectedName, setSelectedName] = useState("");
     const [selectedShop, setSelectedShop] = useState("");
@@ -49,8 +49,10 @@ function AddTask({ closeModal }) {
     // Save to database function (last argument: false == not completed)
     const saveTask = async () => {
         try {
-            const result = await saveToDatabase(selectedType, selectedName, selectedShop, selectedExtra, false)
-            closeModal()
+            const result = await saveToDatabase(selectedType, selectedName, selectedShop, selectedExtra, false);
+            
+            // Pass saved task to index
+            savedTask(JSON.stringify(result));
         }
         catch (error) {
             console.log("Error: ", error)
