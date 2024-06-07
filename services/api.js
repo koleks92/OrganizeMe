@@ -13,6 +13,7 @@ export async function saveToDatabase(type, name, shop, extra, completed) {
             completed: completed
         })
         console.log(response);
+        return response;
     }
     catch (error) {
         console.error("Error: ", error)
