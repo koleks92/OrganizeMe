@@ -56,7 +56,7 @@ function TaskGroup({ type, initialTasks }) {
 
         if (tasksOpen) {
             const heightMax = calculateHeightMax(tasks.length);
-            height.value = withTiming(heightMax);
+            height.value = withTiming(heightMax, {duration: 1000});
         }
     }, [tasks]);
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         zIndex: 2,
         flexDirection: "row",
         borderColor: Colors.darkGreen,
-        borderWidth: 1,
+        borderWidth: 0,
         borderRadius: Sizes.scrH * 0.015,
         padding: Sizes.scrH * 0.015,
         backgroundColor: Colors.mediumGreen,
