@@ -26,5 +26,4 @@
 
 2. Future fixes:
 
-    - TaskGroup and Task borderWidth better with 0 or 1 ?
-    - Task slideout = 
+    - Add task animation instead of refresh :)

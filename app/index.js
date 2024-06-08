@@ -24,14 +24,13 @@ function Index() {
         RobotoMono: require("../assets/fonts/Roboto_Mono/RobotoMono.ttf"),
     });
 
-    // Focused state from modal for reload
-    const [focused, setFocused] = useState(true);
-
     // Focused view 
     const isFocused = useIsFocused();
+
+    const [focused, setFocused] = useState(false);
     
     useEffect(() => {
-        setFocused(isFocused);
+        setFocused(isFocused)
     }, [isFocused]);
 
     // Add task modal visible state
@@ -47,8 +46,8 @@ function Index() {
     // Show/Close modal prop
     const showCloseModal = () => {
         setModalVisible(!modalVisible);
-        setFocused(!focused);
     };
+
 
     // Render loading or error state if fonts are not loaded
     if (!fontsLoaded) {
@@ -71,7 +70,7 @@ function Index() {
                     <SafeAreaProvider>
                         <SafeAreaView>
                             <View style={styles.modalView}>
-                                <AddTask closeModal={showCloseModal} />
+                                <AddTask closeModal={showCloseModal}/>
                             </View>
                         </SafeAreaView>
                     </SafeAreaProvider>
