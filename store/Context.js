@@ -1,10 +1,9 @@
 import { createContext, useState } from "react";
-import { setShouldAnimateExitingForTag } from "react-native-reanimated/lib/typescript/reanimated2/core";
 
-const OrganizeMeContext = createContext();
+export const OrganizeMeContext = createContext();
 
 const OrganizeMeProvider = ({ children }) => {
-    const [task, setTask] = useState();
+    const [taskContext, setTaskContext] = useState();
 
     return (
         <OrganizeMeContext.Provider value={{ taskContext, setTaskContext }}>
@@ -13,4 +12,4 @@ const OrganizeMeProvider = ({ children }) => {
     )
 }
 
-export default OrganizeMeContext;
+export default OrganizeMeProvider;

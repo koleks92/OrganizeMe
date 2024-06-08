@@ -3,7 +3,7 @@ import { Drawer } from "expo-router/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
 import { Colors } from "../constants/Colors";
-import OrganizeMeContext from "../store/Context";
+import OrganizeMeProvider from "../store/Context";
 
 // Screen size
 const scrH = Dimensions.get("window").height;
@@ -14,7 +14,7 @@ const labelSize = scrH * 0.025;
 
 export default function Layout() {
     return (
-        <OrganizeMeContext.Provider>
+        <OrganizeMeProvider>
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <Drawer
                     screenOptions={{
@@ -75,6 +75,6 @@ export default function Layout() {
                     />
                 </Drawer>
             </GestureHandlerRootView>
-        </OrganizeMeContext.Provider>
+        </OrganizeMeProvider>
     );
 }
