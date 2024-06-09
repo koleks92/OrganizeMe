@@ -10,7 +10,7 @@ import { OrganizeMeContext } from "../../store/Context";
 
 function AddTask({ closeModal }) {
     // Context state
-    const {setNewTaskData, setNewTask} = useContext(OrganizeMeContext);
+    const { newTaskHandler } = useContext(OrganizeMeContext);
     
     // State
     const [selectedType, setSelectedType] = useState(null);
@@ -62,16 +62,17 @@ function AddTask({ closeModal }) {
                 selectedExtra,
                 false
             );
-
-            setNewTask(true);
-            setNewTaskData({
+            
+            const task = {
                 id: result.data._id,
                 name: result.data.name,
                 type: result.data.type,
                 shop: result.data.shop,
                 extra: result.data.extra,
                 completed: result.data.completed,
-            });
+            }
+
+            newTaskHandler(task);
 
             // Close modal
             closeModal();
