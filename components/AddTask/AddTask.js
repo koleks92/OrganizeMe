@@ -3,16 +3,22 @@ import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { saveToDatabase } from "../../services/api";
+import { OrganizeMeContext } from "../../store/Context";
 
 function AddTask({ closeModal }) {
+    // State
     const [selectedType, setSelectedType] = useState(null);
     const [selectedName, setSelectedName] = useState("");
     const [selectedShop, setSelectedShop] = useState("");
     const [selectedExtra, setSelectedExtra] = useState("");
 
+    // Context state
+    const {setNewTaskData, setNewTask} = useContext(OrganizeMeContext);
+
+    // Validation state
     const [missingType, setMissingType] = useState(false);
     const [missingName, setMissingName] = useState(false);
 
@@ -42,24 +48,38 @@ function AddTask({ closeModal }) {
             setMissingName(false);
             setMissingType(false);
             // If everything ok, try to save
-            saveTask()
+            saveTask();
         }
-    }
+    };
 
     // Save to database function (last argument: false == not completed)
     const saveTask = async () => {
         try {
-            const result = await saveToDatabase(selectedType, selectedName, selectedShop, selectedExtra, false);
-            
+            const result = await saveToDatabase(
+                selectedType,
+                selectedName,
+                selectedShop,
+                selectedExtra,
+                false
+            );
+
+            setNewTask(true);
+            setNewTaskData({
+                id: result.data.id,
+                name: result.data.name,
+                type: result.data.type,
+                shop: result.data.shop,
+                extra: result.data.extra,
+                completed: result.data.completed,
+            });
+
             // Close modal
             closeModal();
+        } catch (error) {
+            console.log("Error: ", error);
         }
-        catch (error) {
-            console.log("Error: ", error)
-        }
-        
-    }
- 
+    };
+
     return (
         <View style={styles.shadowWrapper}>
             <View style={styles.root}>
@@ -89,7 +109,10 @@ function AddTask({ closeModal }) {
                         style={[styles.optionViewDropdown, styles.optionView]}
                     >
                         <Dropdown
-                            style={[styles.selectInput, missingType && styles.warnBorder]}
+                            style={[
+                                styles.selectInput,
+                                missingType && styles.warnBorder,
+                            ]}
                             placeholderStyle={styles.textInput}
                             selectedTextStyle={styles.textInput}
                             itemTextStyle={styles.dropdownTextStyles}
@@ -110,7 +133,11 @@ function AddTask({ closeModal }) {
                         <TextInput
                             onChangeText={setSelectedName}
                             value={selectedName}
-                            style={[styles.selectInput, styles.textInput, missingName && styles.warnBorder ]}
+                            style={[
+                                styles.selectInput,
+                                styles.textInput,
+                                missingName && styles.warnBorder,
+                            ]}
                             placeholder="Enter name"
                             placeholderTextColor={Colors.darkGreen}
                         />
@@ -134,7 +161,6 @@ function AddTask({ closeModal }) {
                             placeholder="Extra info (optional)"
                             multiline={true}
                             placeholderTextColor={Colors.darkGreen}
-
                         />
                     </View>
                 </View>
@@ -193,7 +219,7 @@ const styles = StyleSheet.create({
     },
     warnBorder: {
         borderColor: Colors.warnRed,
-        borderWidth: 3
+        borderWidth: 3,
     },
     optionViewExtra: {
         height: Sizes.scrH * 0.12,
@@ -223,6 +249,6 @@ const styles = StyleSheet.create({
     },
     dropdownTextStyles: {
         fontSize: Sizes.scrH * 0.02,
-        color: "Colors.darkGreen"
+        color: "Colors.darkGreen",
     },
 });
