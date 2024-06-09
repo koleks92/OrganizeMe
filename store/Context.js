@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const OrganizeMeContext = createContext();
 
 const OrganizeMeProvider = ({ children }) => {
-    const [newTaskData, setNewTaskData] = useState();
+    const [newTaskData, setNewTaskData] = useState(null);
     const [newTask, setNewTask] = useState(false);
 
     return (
