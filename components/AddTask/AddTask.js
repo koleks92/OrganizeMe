@@ -55,6 +55,7 @@ function AddTask({ closeModal }) {
     // Save to database function (last argument: false == not completed)
     const saveTask = async () => {
         try {
+            // Save to database
             const result = await saveToDatabase(
                 selectedType,
                 selectedName,
@@ -63,6 +64,7 @@ function AddTask({ closeModal }) {
                 false
             );
             
+            // Create task variable
             const task = {
                 id: result.data._id,
                 name: result.data.name,
@@ -72,6 +74,7 @@ function AddTask({ closeModal }) {
                 completed: result.data.completed,
             }
 
+            // Pass task to newTaskHandler(Context)
             newTaskHandler(task);
 
             // Close modal
