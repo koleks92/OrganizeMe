@@ -2,11 +2,15 @@ import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
 import CustomModal from "../Modal/CustomModal";
+import ModalTopViewBar from "../Modal/ModalTopViewBar";
+import CloseButton from "../UI/CloseButton";
 
-function TaskModal({ task }) {
+function TaskModal({ task, closeModal }) {
     return (
         <CustomModal>
-            <Text>{task.name}</Text>
+            <ModalTopViewBar>
+                <CloseButton onPress={closeModal} />
+            </ModalTopViewBar>
         </CustomModal>
     );
 }
