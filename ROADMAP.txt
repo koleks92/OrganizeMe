@@ -26,4 +26,4 @@
 
 2. Future fixes:
 
-    - Add task animation instead of refresh :)
+    - Divide AddTask into components(reusability! ! !)
