@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
 import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,23 +11,32 @@ import Animated, {
 } from "react-native-reanimated";
 import { markTask } from "../../services/api";
 import { useState } from "react";
+import TaskModal from "./TaskModal";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 function Task({ task, empty, removedData }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
 
+    // Task modal visible state
+    const [modalVisible, setModalVisible] = useState(false);
+
     // Task press handler
     const taskPressHandler = (task) => {
-        console.log("Click " + task.id);
+        showCloseModal();
     };
 
+    // Show/Close Modal
+    const showCloseModal = () => {
+        setModalVisible(!modalVisible);
+    };
 
     // Shared values
     const scale = useSharedValue(1); // Checkmark scale
     const translateX = useSharedValue(0); // Task root position X
     const height = useSharedValue(Sizes.taskSmallHeight); // Height of task container
-    const marginVertical = useSharedValue(Sizes.taskVerticalMargin) // Margin vertial of task container
-    const borderWidth = useSharedValue(1) // Border width of task container
-    const opacity = useSharedValue(1)
+    const marginVertical = useSharedValue(Sizes.taskVerticalMargin); // Margin vertial of task container
+    const borderWidth = useSharedValue(1); // Border width of task container
+    const opacity = useSharedValue(1);
 
     // Checkmark animation style
     const checkmarkAnimationStyle = useAnimatedStyle(() => {
@@ -42,7 +51,7 @@ function Task({ task, empty, removedData }) {
             height: height.value,
             marginVertical: marginVertical.value,
             borderWidth: borderWidth.value,
-            opacity: opacity.value
+            opacity: opacity.value,
         };
     });
 
@@ -66,16 +75,14 @@ function Task({ task, empty, removedData }) {
         );
 
         marginVertical.value = withTiming(0);
-        
+
         height.value = withSequence(
             withTiming(0, { duration: 1000 }, () => {
-                runOnJS(removedData)(task.id)
-            }),
+                runOnJS(removedData)(task.id);
+            })
         );
         borderWidth.value = withTiming(0);
     };
-
-
 
     // Checkmark press handler
     const checkmarkPressHandler = async (task) => {
@@ -102,8 +109,6 @@ function Task({ task, empty, removedData }) {
                     setMarkName("checkmark-circle")
                 )
             );
-
-        
         } catch (error) {
             console.error("Error: ", error);
         }
@@ -117,29 +122,44 @@ function Task({ task, empty, removedData }) {
         );
     } else {
         return (
-            <Animated.View style={[styles.root, slideoutAnimationStyle]}>
-                <Pressable
-                    style={styles.namePressable}
-                    onPress={() => {
-                        taskPressHandler(task);
-                    }}
+            <>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
                 >
-                    <Text style={styles.text}>{task.name}</Text>
-                </Pressable>
-                <Pressable
-                    onPress={() => {
-                        checkmarkPressHandler(task);
-                    }}
-                >
-                    <Animated.View style={checkmarkAnimationStyle}>
-                        <Ionicons
-                            name={markName}
-                            size={Sizes.scrH * 0.04}
-                            color={Colors.darkGreen}
-                        />
-                    </Animated.View>
-                </Pressable>
-            </Animated.View>
+                    <SafeAreaProvider>
+                        <SafeAreaView>
+                            <View style={styles.modalView}>
+                                <TaskModal task={task} />
+                            </View>
+                        </SafeAreaView>
+                    </SafeAreaProvider>
+                </Modal>
+                <Animated.View style={[styles.root, slideoutAnimationStyle]}>
+                    <Pressable
+                        style={styles.namePressable}
+                        onPress={() => {
+                            taskPressHandler(task);
+                        }}
+                    >
+                        <Text style={styles.text}>{task.name}</Text>
+                    </Pressable>
+                    <Pressable
+                        onPress={() => {
+                            checkmarkPressHandler(task);
+                        }}
+                    >
+                        <Animated.View style={checkmarkAnimationStyle}>
+                            <Ionicons
+                                name={markName}
+                                size={Sizes.scrH * 0.04}
+                                color={Colors.darkGreen}
+                            />
+                        </Animated.View>
+                    </Pressable>
+                </Animated.View>
+            </>
         );
     }
 }
@@ -178,5 +198,10 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: "RobotoMono",
         fontSize: Sizes.scrH * 0.025,
+    },
+    modalView: {
+        flex: 1,
+        marginTop: Sizes.topOptionsHeight,
+        alignItems: "center",
     },
 });
