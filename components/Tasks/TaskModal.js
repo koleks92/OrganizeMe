@@ -1,6 +1,6 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
-function TaskModal() {
+function TaskModal({task}) {
     return (
         <View>
             <Text>Yes</Text>
