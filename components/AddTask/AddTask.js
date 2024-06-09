@@ -8,6 +8,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { saveToDatabase } from "../../services/api";
 import { OrganizeMeContext } from "../../store/Context";
 import CustomModal from "../Modal/CustomModal";
+import ModalTopViewBar from "../Modal/ModalTopViewBar";
 
 function AddTask({ closeModal }) {
     // Context state
@@ -88,7 +89,7 @@ function AddTask({ closeModal }) {
     return (
         <CustomModal>
             {/* Top view bar */}
-            <View style={styles.topView}>
+            <ModalTopViewBar>
                 <ButtonCustom onPress={saveCheck}>
                     <Ionicons
                         name="checkmark-circle-outline"
@@ -106,7 +107,7 @@ function AddTask({ closeModal }) {
                         color={Colors.darkGreen}
                     />
                 </ButtonCustom>
-            </View>
+            </ModalTopViewBar>
             {/*  Types dropdown */}
             <View style={styles.optionsView}>
                 <View style={[styles.optionViewDropdown, styles.optionView]}>
