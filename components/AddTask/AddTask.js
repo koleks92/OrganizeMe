@@ -65,7 +65,7 @@ function AddTask({ closeModal }) {
 
             setNewTask(true);
             setNewTaskData({
-                id: result.data.id,
+                id: result.data._id,
                 name: result.data.name,
                 type: result.data.type,
                 shop: result.data.shop,
