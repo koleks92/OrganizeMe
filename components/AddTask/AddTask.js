@@ -9,6 +9,7 @@ import { saveToDatabase } from "../../services/api";
 import { OrganizeMeContext } from "../../store/Context";
 import CustomModal from "../Modal/CustomModal";
 import ModalTopViewBar from "../Modal/ModalTopViewBar";
+import CloseButton from "../UI/CloseButton";
 
 function AddTask({ closeModal }) {
     // Context state
@@ -100,13 +101,7 @@ function AddTask({ closeModal }) {
                 <View style={styles.headTextView}>
                     <Text style={styles.headText}>New Task</Text>
                 </View>
-                <ButtonCustom onPress={closeModal}>
-                    <Ionicons
-                        name="close-circle-outline"
-                        size={Sizes.topButtonSize}
-                        color={Colors.darkGreen}
-                    />
-                </ButtonCustom>
+                <CloseButton onPress={closeModal} />
             </ModalTopViewBar>
             {/*  Types dropdown */}
             <View style={styles.optionsView}>
