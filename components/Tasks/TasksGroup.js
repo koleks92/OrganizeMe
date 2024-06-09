@@ -14,7 +14,8 @@ import { OrganizeMeContext } from "../../store/Context";
 
 function TaskGroup({ type, initialTasks }) {
     // Context state
-    const { newTask, newTaskData, newTaskHandler } = useContext(OrganizeMeContext);
+    const { newTask, newTaskData, newTaskHandler } =
+        useContext(OrganizeMeContext);
 
     // useState
     const [tasksOpen, setTasksOpen] = useState(false);
@@ -36,16 +37,24 @@ function TaskGroup({ type, initialTasks }) {
     }, []);
 
     // Create array of tasks to render
-    const createTasksToRender = useCallback((tasks) => {
-        if (tasks.length === 0) {
-            setTasksToRender([<Task empty={true} key="empty" />]);
-        } else {
-            setTasksToRender(tasks.map((task) => (
-                <Task task={task} key={task.id} removedData={removedData} />
-            )));
-        }
-    }, [removedData]);
-
+    const createTasksToRender = useCallback(
+        (tasks) => {
+            if (tasks.length === 0) {
+                setTasksToRender([<Task empty={true} key="empty" />]);
+            } else {
+                setTasksToRender(
+                    tasks.map((task) => (
+                        <Task
+                            task={task}
+                            key={task.id}
+                            removedData={removedData}
+                        />
+                    ))
+                );
+            }
+        },
+        [removedData]
+    );
 
     // Remove one task from array/state
     const removedData = useCallback((taskId) => {
@@ -60,16 +69,18 @@ function TaskGroup({ type, initialTasks }) {
     useEffect(() => {
         // Update tasks array
         if (newTask) {
-            setTasks((prevTasks) => {
-                const updatedTasks = [...prevTasks, newTaskData]
-                createTasksToRender(updatedTasks);
-                return updatedTasks;
-            })
-            
-            // Set newTask and newTaskData to false/null
-            newTaskHandler();
+            if (newTaskData.type === type.toLowerCase()) {
+                setTasks((prevTasks) => {
+                    const updatedTasks = [...prevTasks, newTaskData];
+                    createTasksToRender(updatedTasks);
+                    return updatedTasks;
+                });
+
+                // Set newTask and newTaskData to false/null
+                newTaskHandler();
+            }
         }
-    }, [newTask])
+    }, [newTask]);
 
     // Create new array of tasks to render, when tasks state changes
     useEffect(() => {
@@ -77,7 +88,7 @@ function TaskGroup({ type, initialTasks }) {
 
         if (tasksOpen) {
             const heightMax = calculateHeightMax(tasks.length);
-            height.value = withTiming(heightMax, {duration: 1000});
+            height.value = withTiming(heightMax, { duration: 1000 });
         }
     }, [tasks]);
 
@@ -114,10 +125,7 @@ function TaskGroup({ type, initialTasks }) {
 
     return (
         <View>
-            <Pressable
-                style={styles.typeView}
-                onPress={handleOpenTasks}
-            >
+            <Pressable style={styles.typeView} onPress={handleOpenTasks}>
                 <View>
                     <Text style={styles.typeTitle}>{type}</Text>
                 </View>
