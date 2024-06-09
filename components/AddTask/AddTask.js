@@ -9,14 +9,14 @@ import { saveToDatabase } from "../../services/api";
 import { OrganizeMeContext } from "../../store/Context";
 
 function AddTask({ closeModal }) {
+    // Context state
+    const {setNewTaskData, setNewTask} = useContext(OrganizeMeContext);
+    
     // State
     const [selectedType, setSelectedType] = useState(null);
     const [selectedName, setSelectedName] = useState("");
     const [selectedShop, setSelectedShop] = useState("");
     const [selectedExtra, setSelectedExtra] = useState("");
-
-    // Context state
-    const {setNewTaskData, setNewTask} = useContext(OrganizeMeContext);
 
     // Validation state
     const [missingType, setMissingType] = useState(false);
