@@ -1,14 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
+import CustomModal from "../Modal/CustomModal";
 
 function TaskModal({ task }) {
     return (
-        <View style={styles.shadowWrapper}>
-            <View style={styles.root}>
-                <Text>Yes</Text>
-            </View>
-        </View>
+        <CustomModal>
+            <Text>{task.name}</Text>
+        </CustomModal>
     );
 }
 
@@ -32,6 +31,6 @@ const styles = StyleSheet.create({
         height: Sizes.addTaskHeight,
         backgroundColor: Colors.lightGreen,
         padding: Sizes.scrH * 0.01,
-        elevation: 5
+        elevation: 5,
     },
 });
