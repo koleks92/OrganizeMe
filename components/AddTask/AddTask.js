@@ -7,11 +7,12 @@ import { useContext, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { saveToDatabase } from "../../services/api";
 import { OrganizeMeContext } from "../../store/Context";
+import CustomModal from "../Modal/CustomModal";
 
 function AddTask({ closeModal }) {
     // Context state
     const { newTaskHandler } = useContext(OrganizeMeContext);
-    
+
     // State
     const [selectedType, setSelectedType] = useState(null);
     const [selectedName, setSelectedName] = useState("");
@@ -63,7 +64,7 @@ function AddTask({ closeModal }) {
                 selectedExtra,
                 false
             );
-            
+
             // Create task variable
             const task = {
                 id: result.data._id,
@@ -72,7 +73,7 @@ function AddTask({ closeModal }) {
                 shop: result.data.shop,
                 extra: result.data.extra,
                 completed: result.data.completed,
-            }
+            };
 
             // Pass task to newTaskHandler(Context)
             newTaskHandler(task);
@@ -85,116 +86,93 @@ function AddTask({ closeModal }) {
     };
 
     return (
-        <View style={styles.shadowWrapper}>
-            <View style={styles.root}>
-                {/* Top view bar */}
-                <View style={styles.topView}>
-                    <ButtonCustom onPress={saveCheck}>
-                        <Ionicons
-                            name="checkmark-circle-outline"
-                            size={Sizes.topButtonSize}
-                            color={Colors.darkGreen}
-                        />
-                    </ButtonCustom>
-                    <View style={styles.headTextView}>
-                        <Text style={styles.headText}>New Task</Text>
-                    </View>
-                    <ButtonCustom onPress={closeModal}>
-                        <Ionicons
-                            name="close-circle-outline"
-                            size={Sizes.topButtonSize}
-                            color={Colors.darkGreen}
-                        />
-                    </ButtonCustom>
+        <CustomModal>
+            {/* Top view bar */}
+            <View style={styles.topView}>
+                <ButtonCustom onPress={saveCheck}>
+                    <Ionicons
+                        name="checkmark-circle-outline"
+                        size={Sizes.topButtonSize}
+                        color={Colors.darkGreen}
+                    />
+                </ButtonCustom>
+                <View style={styles.headTextView}>
+                    <Text style={styles.headText}>New Task</Text>
                 </View>
-                {/*  Types dropdown */}
-                <View style={styles.optionsView}>
-                    <View
-                        style={[styles.optionViewDropdown, styles.optionView]}
-                    >
-                        <Dropdown
-                            style={[
-                                styles.selectInput,
-                                missingType && styles.warnBorder,
-                            ]}
-                            placeholderStyle={styles.textInput}
-                            selectedTextStyle={styles.textInput}
-                            itemTextStyle={styles.dropdownTextStyles}
-                            containerStyle={styles.dropdownStyles}
-                            data={types}
-                            labelField="label"
-                            valueField="value"
-                            placeholder={"Select type..."}
-                            value={selectedType}
-                            onChange={(item) => {
-                                setSelectedType(item.value);
-                            }}
-                            activeColor={Colors.lightGreen}
-                        />
-                    </View>
-                    {/* Name input */}
-                    <View style={styles.optionView}>
-                        <TextInput
-                            onChangeText={setSelectedName}
-                            value={selectedName}
-                            style={[
-                                styles.selectInput,
-                                styles.textInput,
-                                missingName && styles.warnBorder,
-                            ]}
-                            placeholder="Enter name"
-                            placeholderTextColor={Colors.darkGreen}
-                        />
-                    </View>
-                    {/* Shop input */}
-                    <View style={styles.optionView}>
-                        <TextInput
-                            onChangeText={setSelectedShop}
-                            value={selectedShop}
-                            style={[styles.selectInput, styles.textInput]}
-                            placeholder="Enter shop (optional)"
-                            placeholderTextColor={Colors.darkGreen}
-                        />
-                    </View>
-                    {/* Extra input */}
-                    <View style={styles.optionViewExtra}>
-                        <TextInput
-                            onChangeText={setSelectedExtra}
-                            value={selectedExtra}
-                            style={[styles.selectInput, styles.textInput]}
-                            placeholder="Extra info (optional)"
-                            multiline={true}
-                            placeholderTextColor={Colors.darkGreen}
-                        />
-                    </View>
+                <ButtonCustom onPress={closeModal}>
+                    <Ionicons
+                        name="close-circle-outline"
+                        size={Sizes.topButtonSize}
+                        color={Colors.darkGreen}
+                    />
+                </ButtonCustom>
+            </View>
+            {/*  Types dropdown */}
+            <View style={styles.optionsView}>
+                <View style={[styles.optionViewDropdown, styles.optionView]}>
+                    <Dropdown
+                        style={[
+                            styles.selectInput,
+                            missingType && styles.warnBorder,
+                        ]}
+                        placeholderStyle={styles.textInput}
+                        selectedTextStyle={styles.textInput}
+                        itemTextStyle={styles.dropdownTextStyles}
+                        containerStyle={styles.dropdownStyles}
+                        data={types}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={"Select type..."}
+                        value={selectedType}
+                        onChange={(item) => {
+                            setSelectedType(item.value);
+                        }}
+                        activeColor={Colors.lightGreen}
+                    />
+                </View>
+                {/* Name input */}
+                <View style={styles.optionView}>
+                    <TextInput
+                        onChangeText={setSelectedName}
+                        value={selectedName}
+                        style={[
+                            styles.selectInput,
+                            styles.textInput,
+                            missingName && styles.warnBorder,
+                        ]}
+                        placeholder="Enter name"
+                        placeholderTextColor={Colors.darkGreen}
+                    />
+                </View>
+                {/* Shop input */}
+                <View style={styles.optionView}>
+                    <TextInput
+                        onChangeText={setSelectedShop}
+                        value={selectedShop}
+                        style={[styles.selectInput, styles.textInput]}
+                        placeholder="Enter shop (optional)"
+                        placeholderTextColor={Colors.darkGreen}
+                    />
+                </View>
+                {/* Extra input */}
+                <View style={styles.optionViewExtra}>
+                    <TextInput
+                        onChangeText={setSelectedExtra}
+                        value={selectedExtra}
+                        style={[styles.selectInput, styles.textInput]}
+                        placeholder="Extra info (optional)"
+                        multiline={true}
+                        placeholderTextColor={Colors.darkGreen}
+                    />
                 </View>
             </View>
-        </View>
+        </CustomModal>
     );
 }
 
 export default AddTask;
 
 const styles = StyleSheet.create({
-    shadowWrapper: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 6,
-    },
-    root: {
-        borderWidth: 1,
-        borderColor: Colors.darkGreen,
-        borderRadius: Sizes.scrH * 0.015,
-        width: Sizes.addTaskWidth,
-        height: Sizes.addTaskHeight,
-        backgroundColor: Colors.lightGreen,
-        padding: Sizes.scrH * 0.01,
-        elevation: 5,
-    },
     topView: {
         flexDirection: "row",
         justifyContent: "space-between",
