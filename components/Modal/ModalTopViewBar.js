@@ -11,7 +11,7 @@ function ModalTopViewBar({children}) {
 export default ModalTopViewBar;
 
 const styles = StyleSheet.create({
-    topView: {
+    topViewBar: {
         flexDirection: "row",
         justifyContent: "space-between",
     }
