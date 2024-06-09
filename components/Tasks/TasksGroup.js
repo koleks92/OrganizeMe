@@ -3,15 +3,20 @@ import Task from "./Task";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withSpring,
     withTiming,
 } from "react-native-reanimated";
+import { OrganizeMeContext } from "../../store/Context";
 
 function TaskGroup({ type, initialTasks }) {
+    // Context state
+    const { newTask, newTaskData, newTaskHandler } = useContext(OrganizeMeContext);
+
+    // useState
     const [tasksOpen, setTasksOpen] = useState(false);
     const [tasks, setTasks] = useState(initialTasks);
     const [tasksToRender, setTasksToRender] = useState([]);
@@ -41,6 +46,7 @@ function TaskGroup({ type, initialTasks }) {
         }
     }, [removedData]);
 
+
     // Remove one task from array/state
     const removedData = useCallback((taskId) => {
         setTasks((prevTasks) => {
@@ -49,6 +55,21 @@ function TaskGroup({ type, initialTasks }) {
             return updatedTasks;
         });
     }, []);
+
+    // Check if new task was added
+    useEffect(() => {
+        // Update tasks array
+        if (newTask) {
+            setTasks((prevTasks) => {
+                const updatedTasks = [...prevTasks, newTaskData]
+                createTasksToRender(updatedTasks);
+                return updatedTasks;
+            })
+            
+            // Set newTask and newTaskData to false/null
+            newTaskHandler();
+        }
+    }, [newTask])
 
     // Create new array of tasks to render, when tasks state changes
     useEffect(() => {
