@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 
-function HeadText({ children }) {
+function HeadTextModal({ children }) {
     return (
         <View style={styles.headTextView}>
             <Text style={styles.headText}>{children}</Text>
