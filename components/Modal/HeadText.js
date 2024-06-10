@@ -18,8 +18,10 @@ const styles = StyleSheet.create({
         fontFamily: "RobotoMono",
         fontWeight: "bold",
         color: Colors.warmWhite,
+        textAlign: 'center'
     },
     headTextView: {
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
     },
