@@ -99,16 +99,6 @@ function Task({ task, empty, removedData }) {
         // Send API request to mark the task
         try {
             const response = await markTask(task.id, newCompleted);
-
-            // Checkmark animation
-            scale.value = withSequence(
-                withTiming(1.2, { duration: 300 }),
-                withTiming(
-                    1,
-                    { duration: 300 },
-                    setMarkName("checkmark-circle")
-                )
-            );
         } catch (error) {
             console.error("Error: ", error);
         }
