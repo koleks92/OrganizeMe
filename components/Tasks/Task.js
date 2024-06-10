@@ -133,7 +133,7 @@ function Task({ task, empty, removedData }) {
                             taskPressHandler(task);
                         }}
                     >
-                        <Text style={styles.text}>{task.name}</Text>
+                        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{task.name}</Text>
                     </Pressable>
                     <Pressable
                         onPress={() => {
