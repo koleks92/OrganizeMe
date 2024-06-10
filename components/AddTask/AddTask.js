@@ -10,6 +10,7 @@ import { OrganizeMeContext } from "../../store/Context";
 import CustomModal from "../Modal/CustomModal";
 import ModalTopViewBar from "../Modal/ModalTopViewBar";
 import CloseButton from "../UI/CloseButton";
+import HeadText from "../Modal/HeadText";
 
 function AddTask({ closeModal }) {
     // Context state
@@ -98,9 +99,7 @@ function AddTask({ closeModal }) {
                         color={Colors.darkGreen}
                     />
                 </ButtonCustom>
-                <View style={styles.headTextView}>
-                    <Text style={styles.headText}>New Task</Text>
-                </View>
+                <HeadText>New Task</HeadText>
                 <CloseButton onPress={closeModal} />
             </ModalTopViewBar>
             {/*  Types dropdown */}
@@ -175,16 +174,6 @@ const styles = StyleSheet.create({
     },
     displayNone: {
         opacity: 0,
-    },
-    headText: {
-        fontSize: Sizes.scrH * 0.03,
-        fontFamily: "RobotoMono",
-        fontWeight: "bold",
-        color: Colors.warmWhite,
-    },
-    headTextView: {
-        justifyContent: "center",
-        alignItems: "center",
     },
     optionsView: {
         flex: 1,
