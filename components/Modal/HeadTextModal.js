@@ -10,7 +10,7 @@ function HeadTextModal({ children }) {
     );
 }
 
-export default HeadText;
+export default HeadTextModal;
 
 const styles = StyleSheet.create({
     headText: {
