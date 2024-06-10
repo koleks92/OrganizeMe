@@ -121,7 +121,7 @@ function Task({ task, empty, removedData }) {
                     <SafeAreaProvider>
                         <SafeAreaView>
                             <View style={styles.modalView}>
-                                <TaskModal task={task} closeModal={showCloseModal}/>
+                                <TaskModal task={task} closeModal={showCloseModal} slideOutAnimation={slideoutAnimation}/>
                             </View>
                         </SafeAreaView>
                     </SafeAreaProvider>
