@@ -11,8 +11,9 @@ import CustomModal from "../Modal/CustomModal";
 import ModalTopViewBar from "../Modal/ModalTopViewBar";
 import CloseButton from "../UI/CloseButton";
 import HeadTextModal from "../Modal/HeadTextModal";
+import MainViewModal from "../Modal/MainViewModal";
 
-function AddTask({ closeModal }) {
+function AddTaskModal({ closeModal }) {
     // Context state
     const { newTaskHandler } = useContext(OrganizeMeContext);
 
@@ -103,7 +104,7 @@ function AddTask({ closeModal }) {
                 <CloseButton onPress={closeModal} />
             </ModalTopViewBar>
             {/*  Types dropdown */}
-            <View style={styles.optionsView}>
+            <MainViewModal>
                 <View style={[styles.optionViewDropdown, styles.optionView]}>
                     <Dropdown
                         style={[
@@ -160,12 +161,12 @@ function AddTask({ closeModal }) {
                         placeholderTextColor={Colors.darkGreen}
                     />
                 </View>
-            </View>
+            </MainViewModal>
         </CustomModal>
     );
 }
 
-export default AddTask;
+export default AddTaskModal;
 
 const styles = StyleSheet.create({
     topView: {

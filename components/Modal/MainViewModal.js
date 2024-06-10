@@ -1,4 +1,5 @@
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Sizes } from "../../constants/Sizes";
 
 function MainViewModal({children}) {
     return (
