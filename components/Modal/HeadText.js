@@ -1,4 +1,6 @@
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import { Sizes } from "../../constants/Sizes";
+import { Colors } from "../../constants/Colors";
 
 function HeadText({ children }) {
     return (
