@@ -9,8 +9,11 @@ import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
 import { deleteTask } from "../../services/api";
 import MainViewModal from "../Modal/MainViewModal";
+import { useState } from "react";
 
-function TaskModal({ task, closeModal, slideOutAnimation }) {
+function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
+
+    const [edit, setEdit] = useState(false);
 
     // Handler for delete button
     const deleteHandler = async () => {
@@ -25,7 +28,8 @@ function TaskModal({ task, closeModal, slideOutAnimation }) {
 
     // Edit handler
     const editHandler = () => {
-        console.log("Edit!")
+        setEdit(true);
+        closeModal();
     }
 
     // Type name converter
