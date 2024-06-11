@@ -10,23 +10,34 @@ import Animated, {
     runOnJS,
 } from "react-native-reanimated";
 import { markTask } from "../../services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskModal from "./TaskModal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import AddTaskModal from "./AddTaskModal";
 
 function Task({ task, empty, removedData }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
 
-    // Task modal visible state
+    // Modal visible state
     const [modalVisible, setModalVisible] = useState(false);
 
+    // Modal mode
+    const [edit, setEdit] = useState(false);
+    const [modalContent, setModalContent] = useState(taskModal);
+
     // Task press handler
-    const taskPressHandler = (task) => {
+    const taskPressHandler = () => {
         showCloseModal();
     };
 
     // Show/Close Modal
     const showCloseModal = () => {
+        console.log("Show/Close")
+        // If last mode was edit, change to initial and set edit false
+        if (edit) {
+            setModalContent(taskModal);
+            setEdit(false);
+        }
         setModalVisible(!modalVisible);
     };
 
@@ -104,6 +115,32 @@ function Task({ task, empty, removedData }) {
         }
     };
 
+    // Edit handler
+    const editHandler = (data) => {
+        if (data === true) {
+            setEdit(true);
+        }
+    };
+
+    useEffect(() => {
+        if (edit) {
+            setModalContent(addModal);
+        } else {
+            setModalContent(taskModal);
+        }
+    }, [edit]);
+
+    const taskModal = (
+        <TaskModal
+            task={task}
+            closeModal={showCloseModal}
+            slideOutAnimation={slideoutAnimation}
+            edit={editHandler}
+        />
+    );
+
+    const addModal = <AddTaskModal closeModal={showCloseModal} />;
+
     if (empty) {
         return (
             <View style={[styles.root, styles.empty]}>
@@ -120,9 +157,7 @@ function Task({ task, empty, removedData }) {
                 >
                     <SafeAreaProvider>
                         <SafeAreaView>
-                            <View style={styles.modalView}>
-                                <TaskModal task={task} closeModal={showCloseModal} slideOutAnimation={slideoutAnimation}/>
-                            </View>
+                            <View style={styles.modalView}>{modalContent}</View>
                         </SafeAreaView>
                     </SafeAreaProvider>
                 </Modal>
@@ -133,7 +168,13 @@ function Task({ task, empty, removedData }) {
                             taskPressHandler(task);
                         }}
                     >
-                        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{task.name}</Text>
+                        <Text
+                            style={styles.text}
+                            numberOfLines={1}
+                            ellipsizeMode="tail"
+                        >
+                            {task.name}
+                        </Text>
                     </Pressable>
                     <Pressable
                         onPress={() => {

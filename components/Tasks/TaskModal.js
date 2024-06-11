@@ -13,8 +13,6 @@ import { useState } from "react";
 
 function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
 
-    const [edit, setEdit] = useState(false);
-
     // Handler for delete button
     const deleteHandler = async () => {
         try {
@@ -28,8 +26,7 @@ function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
 
     // Edit handler
     const editHandler = () => {
-        setEdit(true);
-        closeModal();
+        edit(true);
     }
 
     // Type name converter
