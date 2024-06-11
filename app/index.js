@@ -6,7 +6,7 @@ import { Modal, StyleSheet, View} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
 import { useEffect, useState } from "react";
-import AddTask from "../components/Tasks/AddTaskModal";
+import AddTaskModal from "../components/Tasks/AddTaskModal";
 import ButtonCustom from "../components/UI/ButtonCustom";
 import Top from "../components/UI/Top";
 import MenuButton from "../components/UI/MenuButton";
@@ -70,7 +70,7 @@ function Index() {
                     <SafeAreaProvider>
                         <SafeAreaView>
                             <View style={styles.modalView}>
-                                <AddTask closeModal={showCloseModal}/>
+                                <AddTaskModal closeModal={showCloseModal}/>
                             </View>
                         </SafeAreaView>
                     </SafeAreaProvider>
