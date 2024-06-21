@@ -15,7 +15,7 @@ import MainViewModal from "../Modal/MainViewModal";
 
 function AddTaskModal({ closeModal, task, edit }) {
     // Context state
-    const { newTaskHandler } = useContext(OrganizeMeContext);
+    const { newTaskHandler, oldTaskHandler } = useContext(OrganizeMeContext);
 
     // State
     const [selectedType, setSelectedType] = useState(null);
@@ -104,7 +104,14 @@ function AddTaskModal({ closeModal, task, edit }) {
                 extra: result.data.extra,
                 completed: result.data.completed,
             };
-            newTaskHandler(task)
+
+            
+            oldTaskHandler(task.id)
+
+            setTimeout(() => {
+                newTaskHandler(task)
+            }, 1000)
+
 
             closeModal()
 
