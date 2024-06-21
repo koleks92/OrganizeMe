@@ -29,7 +29,7 @@ function AddTaskModal({ closeModal, task, edit }) {
 
     // Edit state
     const [editMode, setEditMode] = useState(false);
-    const [taskToEdit, setTaskToEdit] = useState(null);
+    const [taskId, setTaskId] = useState();
 
     // Types of tasks
     const types = [
@@ -39,13 +39,22 @@ function AddTaskModal({ closeModal, task, edit }) {
         { label: "Check", value: "check" },
     ];
 
+    let headText = "New Task";
+    if (editMode) {
+        headText = "Edit Task";
+    }
+
     // Edit mode
     useEffect(() => {
         if (edit) {
             setEditMode(true);
-            setTaskToEdit(task);
+            setTaskId(task.id);
+            setSelectedType(task.type);
+            setSelectedName(task.name);
+            setSelectedShop(task.shop);
+            setSelectedExtra(task.extra);
         }
-    }, [edit])
+    }, [edit]);
 
     // Check for save the task !
     const saveCheck = () => {
@@ -65,7 +74,13 @@ function AddTaskModal({ closeModal, task, edit }) {
             setMissingName(false);
             setMissingType(false);
             // If everything ok, try to save
-            saveTask();
+            if (editMode) {
+                console.log("Edit save");
+                console.log(taskId);
+                // TODO
+            } else {
+                saveTask();
+            }
         }
     };
 
@@ -100,11 +115,6 @@ function AddTaskModal({ closeModal, task, edit }) {
             console.log("Error: ", error);
         }
     };
-
-    let headText = "New Task";
-    if (editMode) {
-        headText = "Edit Task"
-    }
 
     return (
         <CustomModal>
