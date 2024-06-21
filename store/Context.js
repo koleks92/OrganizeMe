@@ -4,7 +4,20 @@ export const OrganizeMeContext = createContext();
 
 const OrganizeMeProvider = ({ children }) => {
     const [newTask, setNewTask] = useState(false);
-    const [newTaskData, setNewTaskData] = useState(null)
+    const [newTaskData, setNewTaskData] = useState(null);
+
+    const [oldTaskId, setOldTaskId] = useState(null);
+    const [oldTask, setOldTask] = useState(false);
+
+    const oldTaskHandler = (taskId) => {
+        if (taskId) {
+            setOldTaskId(taskId);
+            setOldTask(true);
+        } else {
+            setOldTaskId(null);
+            setOldTask(false);
+        }
+    }
 
     const newTaskHandler = (task) => {
         if (task) {
@@ -17,7 +30,9 @@ const OrganizeMeProvider = ({ children }) => {
     } 
 
     return (
-        <OrganizeMeContext.Provider value={{ newTaskData, newTaskHandler, newTask, setNewTask, setNewTaskData }}>
+        <OrganizeMeContext.Provider value={{ newTaskData, newTaskHandler, newTask, setNewTask, setNewTaskData,
+            oldTask, setOldTask, oldTaskHandler, setOldTaskId, oldTaskId
+         }}>
             {children}
         </OrganizeMeContext.Provider>
     )
