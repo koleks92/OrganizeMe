@@ -5,7 +5,7 @@ import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
 import { useContext, useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import { saveToDatabase } from "../../services/api";
+import { editTaskToDatabase, saveToDatabase } from "../../services/api";
 import { OrganizeMeContext } from "../../store/Context";
 import CustomModal from "../Modal/CustomModal";
 import ModalTopViewBar from "../Modal/ModalTopViewBar";
@@ -44,6 +44,7 @@ function AddTaskModal({ closeModal, task, edit }) {
         headText = "Edit Task";
     }
 
+
     // Edit mode
     useEffect(() => {
         if (edit) {
@@ -75,14 +76,42 @@ function AddTaskModal({ closeModal, task, edit }) {
             setMissingType(false);
             // If everything ok, try to save
             if (editMode) {
-                console.log("Edit save");
-                console.log(taskId);
-                // TODO
+                editTask()
             } else {
                 saveTask();
             }
         }
     };
+
+    // Save edited task to database function
+    const editTask = async () => {
+        try {
+            // Save to database
+            const result = await editTaskToDatabase(
+                taskId,
+                selectedName,
+                selectedType,
+                selectedShop,
+                selectedExtra
+            )
+           
+            // Create task variable
+            const task = {
+                id: result.data._id,
+                name: result.data.name,
+                type: result.data.type,
+                shop: result.data.shop,
+                extra: result.data.extra,
+                completed: result.data.completed,
+            };
+            newTaskHandler(task)
+
+            closeModal()
+
+        } catch (error) {
+            console.error("Error: ", error)
+        }
+    }
 
     // Save to database function (last argument: false == not completed)
     const saveTask = async () => {
