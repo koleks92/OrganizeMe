@@ -3,7 +3,7 @@ import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { saveToDatabase } from "../../services/api";
 import { OrganizeMeContext } from "../../store/Context";
@@ -13,7 +13,7 @@ import CloseButton from "../UI/CloseButton";
 import HeadTextModal from "../Modal/HeadTextModal";
 import MainViewModal from "../Modal/MainViewModal";
 
-function AddTaskModal({ closeModal }) {
+function AddTaskModal({ closeModal, task, edit }) {
     // Context state
     const { newTaskHandler } = useContext(OrganizeMeContext);
 
@@ -27,6 +27,10 @@ function AddTaskModal({ closeModal }) {
     const [missingType, setMissingType] = useState(false);
     const [missingName, setMissingName] = useState(false);
 
+    // Edit state
+    const [editMode, setEditMode] = useState(false);
+    const [taskToEdit, setTaskToEdit] = useState(null);
+
     // Types of tasks
     const types = [
         { label: "Do", value: "do" },
@@ -34,6 +38,14 @@ function AddTaskModal({ closeModal }) {
         { label: "Sell", value: "sell" },
         { label: "Check", value: "check" },
     ];
+
+    // Edit mode
+    useEffect(() => {
+        if (edit) {
+            setEditMode(true);
+            setTaskToEdit(task);
+        }
+    }, [edit])
 
     // Check for save the task !
     const saveCheck = () => {
@@ -89,6 +101,11 @@ function AddTaskModal({ closeModal }) {
         }
     };
 
+    let headText = "New Task";
+    if (editMode) {
+        headText = "Edit Task"
+    }
+
     return (
         <CustomModal>
             {/* Top view bar */}
@@ -100,7 +117,7 @@ function AddTaskModal({ closeModal }) {
                         color={Colors.darkGreen}
                     />
                 </ButtonCustom>
-                <HeadTextModal>New Task</HeadTextModal>
+                <HeadTextModal>{headText}</HeadTextModal>
                 <CloseButton onPress={closeModal} />
             </ModalTopViewBar>
             {/*  Types dropdown */}
