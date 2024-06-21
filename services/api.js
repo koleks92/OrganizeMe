@@ -10,13 +10,12 @@ export async function saveToDatabase(type, name, shop, extra, completed) {
             name: name,
             shop: shop,
             extra: extra,
-            completed: completed
-        })
+            completed: completed,
+        });
         console.log(response);
         return response;
-    }
-    catch (error) {
-        console.error("Error: ", error)
+    } catch (error) {
+        console.error("Error: ", error);
     }
 }
 
@@ -27,18 +26,18 @@ export async function getAllTasks() {
         const response = await axios.get(url);
         return response.data;
     } catch (error) {
-        console.error("Error: ", error)
+        console.error("Error: ", error);
     }
-};
+}
 
 // Get all history (completed tasks)
 
 export async function getAllHistory() {
     try {
         const response = await axios.get(urlHistory);
-        console.log(response)
+        console.log(response);
     } catch (error) {
-        console.error("Error: ", error)
+        console.error("Error: ", error);
     }
 }
 
@@ -49,7 +48,7 @@ export async function deleteTask(id) {
         const response = await axios.delete(url + "/" + id);
         console.log(response);
     } catch (error) {
-        console.error("Error:", error)
+        console.error("Error:", error);
     }
 }
 
@@ -57,8 +56,8 @@ export async function deleteTask(id) {
 
 export async function getTask(id) {
     try {
-        const response = await axios.get(url + "/" + id)
-        console.log(response)
+        const response = await axios.get(url + "/" + id);
+        console.log(response);
     } catch (error) {
         console.error("Error: ", error);
     }
@@ -68,8 +67,14 @@ export async function getTask(id) {
 
 export async function editTaskToDatabase(id, name, type, shop, extra) {
     try {
-        const response = await axios.put(url + "/" + id, name, type, shop, extra);
-        console.log(response)
+        const response = await axios.put(url + "/" + id, {
+            name,
+            type,
+            shop,
+            extra,
+        });
+        console.log(response);
+        return response;
     } catch (error) {
         console.error("Error: ", error);
     }
@@ -79,7 +84,9 @@ export async function editTaskToDatabase(id, name, type, shop, extra) {
 
 export async function markTask(id, completed) {
     try {
-        const response = await axios.put(`${url}/${id}/completed`, {completed: completed});
+        const response = await axios.put(`${url}/${id}/completed`, {
+            completed: completed,
+        });
         console.log(response);
     } catch (error) {
         console.error("Error:", error);
