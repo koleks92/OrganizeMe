@@ -142,7 +142,7 @@ function Task({ task, empty, removedData }) {
         />
     );
 
-    const addModal = <AddTaskModal closeModal={showCloseModal} taskToEdit={task} edit={true} />;
+    const addModal = <AddTaskModal closeModal={showCloseModal} task={task} edit={true} />;
 
     if (empty) {
         return (
