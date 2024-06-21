@@ -66,7 +66,7 @@ export async function getTask(id) {
 
 // Edit task
 
-export async function editTask(id, name, type, shop, extra) {
+export async function editTaskToDatabase(id, name, type, shop, extra) {
     try {
         const response = await axios.put(url + "/" + id, name, type, shop, extra);
         console.log(response)
