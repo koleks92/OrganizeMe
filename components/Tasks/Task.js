@@ -27,18 +27,17 @@ function Task({ task, empty, removedData }) {
 
     // Task press handler
     const taskPressHandler = () => {
-        showCloseModal();
+        setModalVisible(true);
     };
 
     // Show/Close Modal
     const showCloseModal = () => {
-        console.log("Show/Close")
+        setModalVisible(false);
         // If last mode was edit, change to initial and set edit false
         if (edit) {
             setModalContent(taskModal);
             setEdit(false);
         }
-        setModalVisible(!modalVisible);
     };
 
     // Shared values
@@ -124,7 +123,11 @@ function Task({ task, empty, removedData }) {
 
     useEffect(() => {
         if (edit) {
-            setModalContent(addModal);
+            setModalVisible(false);
+            setTimeout(() => {
+                setModalContent(addModal);
+                setModalVisible(true);
+            }, 250);
         } else {
             setModalContent(taskModal);
         }
@@ -139,7 +142,7 @@ function Task({ task, empty, removedData }) {
         />
     );
 
-    const addModal = <AddTaskModal closeModal={showCloseModal} />;
+    const addModal = <AddTaskModal closeModal={showCloseModal} taskToEdit={task} edit={true} />;
 
     if (empty) {
         return (
