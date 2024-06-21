@@ -14,7 +14,7 @@ import { OrganizeMeContext } from "../../store/Context";
 
 function TaskGroup({ type, initialTasks }) {
     // Context state
-    const { newTask, newTaskData, newTaskHandler } =
+    const { newTask, newTaskData, newTaskHandler, oldTaskId, oldTask, oldTaskHandler } =
         useContext(OrganizeMeContext);
 
     // useState
@@ -81,6 +81,19 @@ function TaskGroup({ type, initialTasks }) {
             }
         }
     }, [newTask]);
+
+    // Check if should remove one task
+    useEffect(() => {
+        // Update tasks array
+        if (oldTask) {
+            setTasks((prevTasks) => {
+                const updatedTasks = prevTasks.filter((task) => task.id !== oldTaskId);
+                createTasksToRender(updatedTasks);
+                return updatedTasks;
+            });
+            oldTaskHandler()
+        }
+    }, [oldTask])
 
     // Create new array of tasks to render, when tasks state changes
     useEffect(() => {
