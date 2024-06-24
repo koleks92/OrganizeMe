@@ -5,7 +5,7 @@ import { useNavigation } from "expo-router";
 import { Modal, StyleSheet, View} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddTaskModal from "../components/Tasks/AddTaskModal";
 import ButtonCustom from "../components/UI/ButtonCustom";
 import Top from "../components/UI/Top";
@@ -16,9 +16,14 @@ import AllTasks from "../components/Tasks/AllTasks";
 import { Colors } from "../constants/Colors";
 import { useFonts } from "expo-font";
 import Loading from "../components/UI/Loading";
+import { OrganizeMeContext } from "../store/Context";
 
 
 function Index() {
+    // Context for edit mode
+    const { editMode, editTask } = useContext(OrganizeMeContext);
+    const [ task, setTask ] = useState(null);
+
     // Load fonts
     const [fontsLoaded, fontError] = useFonts({
         RobotoMono: require("../assets/fonts/Roboto_Mono/RobotoMono.ttf"),
@@ -32,6 +37,14 @@ function Index() {
     useEffect(() => {
         setFocused(isFocused)
     }, [isFocused]);
+
+
+    useEffect(() => {
+        if (editMode == true) {
+            setTask(editTask);
+            showCloseModal()
+        }
+    }, [editMode])
 
     // Add task modal visible state
     const [modalVisible, setModalVisible] = useState(false);
@@ -70,7 +83,7 @@ function Index() {
                     <SafeAreaProvider>
                         <SafeAreaView>
                             <View style={styles.modalView}>
-                                <AddTaskModal closeModal={showCloseModal}/>
+                                <AddTaskModal closeModal={showCloseModal} task={task} edit={editMode}/>
                             </View>
                         </SafeAreaView>
                     </SafeAreaProvider>
