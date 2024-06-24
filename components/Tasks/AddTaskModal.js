@@ -15,7 +15,7 @@ import MainViewModal from "../Modal/MainViewModal";
 
 function AddTaskModal({ closeModal, task, edit }) {
     // Context state
-    const { newTaskHandler, oldTaskHandler } = useContext(OrganizeMeContext);
+    const { newTaskHandler, oldTaskHandler, setEditMode, setEditTask } = useContext(OrganizeMeContext);
 
     // State
     const [selectedType, setSelectedType] = useState(null);
@@ -28,7 +28,6 @@ function AddTaskModal({ closeModal, task, edit }) {
     const [missingName, setMissingName] = useState(false);
 
     // Edit state
-    const [editMode, setEditMode] = useState(false);
     const [taskId, setTaskId] = useState();
 
     // Types of tasks
@@ -40,14 +39,13 @@ function AddTaskModal({ closeModal, task, edit }) {
     ];
 
     let headText = "New Task";
-    if (editMode) {
+    if (edit) {
         headText = "Edit Task";
     }
 
     // Edit mode
     useEffect(() => {
         if (edit) {
-            setEditMode(true);
             setTaskId(task.id);
             setSelectedType(task.type);
             setSelectedName(task.name);
@@ -74,7 +72,7 @@ function AddTaskModal({ closeModal, task, edit }) {
             setMissingName(false);
             setMissingType(false);
             // If everything ok, try to save
-            if (editMode) {
+            if (edit) {
                 editTask();
             } else {
                 saveTask();
@@ -111,6 +109,8 @@ function AddTaskModal({ closeModal, task, edit }) {
             }, 1000);
 
             closeModal();
+            setEditMode(false);
+            setEditTask(null);
         } catch (error) {
             console.error("Error: ", error);
         }

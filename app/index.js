@@ -21,7 +21,7 @@ import { OrganizeMeContext } from "../store/Context";
 
 function Index() {
     // Context for edit mode
-    const { editMode, editTask } = useContext(OrganizeMeContext);
+    const { editMode, editTask, setEditMode, setEditTask } = useContext(OrganizeMeContext);
     const [ task, setTask ] = useState(null);
 
     // Load fonts
@@ -58,6 +58,10 @@ function Index() {
 
     // Show/Close modal prop
     const showCloseModal = () => {
+        if (editMode && modalVisible) {
+            setEditMode(false);
+            setEditTask(null);
+        }
         setModalVisible(!modalVisible);
     };
 
