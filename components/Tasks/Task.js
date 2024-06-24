@@ -111,8 +111,8 @@ function Task({ task, empty, removedData }) {
     // Edit handler
     const editHandler = () => {
         showCloseModal()
-        setEditMode(true);
         setEditTask(task);
+        setEditMode(true);
     };
 
     if (empty) {
