@@ -9,6 +9,9 @@ const OrganizeMeProvider = ({ children }) => {
     const [oldTaskId, setOldTaskId] = useState(null);
     const [oldTask, setOldTask] = useState(false);
 
+    const [editMode, setEditMode] = useState(false);
+    const [editTask, setEditTask] = useState(null);
+
     const oldTaskHandler = (taskId) => {
         if (taskId) {
             setOldTaskId(taskId);
@@ -42,6 +45,10 @@ const OrganizeMeProvider = ({ children }) => {
                 oldTaskHandler,
                 setOldTaskId,
                 oldTaskId,
+                editTask,
+                setEditTask,
+                editMode,
+                setEditMode
             }}
         >
             {children}
