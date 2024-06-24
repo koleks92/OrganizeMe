@@ -35,16 +35,19 @@ const OrganizeMeProvider = ({ children }) => {
     return (
         <OrganizeMeContext.Provider
             value={{
+                // New Task Data
                 newTaskData,
                 newTaskHandler,
                 newTask,
                 setNewTask,
                 setNewTaskData,
+                // Old Task Data
                 oldTask,
                 setOldTask,
                 oldTaskHandler,
                 setOldTaskId,
                 oldTaskId,
+                // Edit task mode
                 editTask,
                 setEditTask,
                 editMode,
