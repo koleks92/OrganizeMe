@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { Sizes } from "../../constants/Sizes";
 import { Colors } from "../../constants/Colors";
 import ButtonCustom from "../UI/ButtonCustom";
@@ -44,7 +44,6 @@ function AddTaskModal({ closeModal, task, edit }) {
         headText = "Edit Task";
     }
 
-
     // Edit mode
     useEffect(() => {
         if (edit) {
@@ -76,7 +75,7 @@ function AddTaskModal({ closeModal, task, edit }) {
             setMissingType(false);
             // If everything ok, try to save
             if (editMode) {
-                editTask()
+                editTask();
             } else {
                 saveTask();
             }
@@ -93,8 +92,8 @@ function AddTaskModal({ closeModal, task, edit }) {
                 selectedType,
                 selectedShop,
                 selectedExtra
-            )
-           
+            );
+
             // Create task variable
             const task = {
                 id: result.data._id,
@@ -105,20 +104,17 @@ function AddTaskModal({ closeModal, task, edit }) {
                 completed: result.data.completed,
             };
 
-            
-            oldTaskHandler(task.id)
+            oldTaskHandler(task.id);
 
             setTimeout(() => {
-                newTaskHandler(task)
-            }, 1000)
+                newTaskHandler(task);
+            }, 1000);
 
-
-            closeModal()
-
+            closeModal();
         } catch (error) {
-            console.error("Error: ", error)
+            console.error("Error: ", error);
         }
-    }
+    };
 
     // Save to database function (last argument: false == not completed)
     const saveTask = async () => {
