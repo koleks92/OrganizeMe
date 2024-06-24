@@ -2,14 +2,12 @@ import { View, StyleSheet } from "react-native";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
 
-function CustomModal({children}) {
+function CustomModal({ children }) {
     return (
         <View style={styles.shadowWrapper}>
-            <View style={styles.root}>
-                {children}
-            </View>
+            <View style={styles.root}>{children}</View>
         </View>
-    )
+    );
 }
 
 export default CustomModal;
@@ -32,6 +30,6 @@ const styles = StyleSheet.create({
         height: Sizes.addTaskHeight,
         backgroundColor: Colors.lightGreen,
         padding: Sizes.scrH * 0.01,
-        elevation: 5
-    }
+        elevation: 5,
+    },
 });
