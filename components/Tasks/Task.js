@@ -10,10 +10,10 @@ import Animated, {
     runOnJS,
 } from "react-native-reanimated";
 import { markTask } from "../../services/api";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import TaskModal from "./TaskModal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import AddTaskModal from "./AddTaskModal";
+import { OrganizeMeContext } from "../../store/Context";
 
 function Task({ task, empty, removedData }) {
     const [markName, setMarkName] = useState("checkmark-circle-outline");
@@ -21,9 +21,8 @@ function Task({ task, empty, removedData }) {
     // Modal visible state
     const [modalVisible, setModalVisible] = useState(false);
 
-    // Modal mode
-    const [edit, setEdit] = useState(false);
-    const [modalContent, setModalContent] = useState(taskModal);
+    // Context
+    const { setEditMode, setEditTask } = useContext(OrganizeMeContext);
 
     // Task press handler
     const taskPressHandler = () => {
@@ -33,11 +32,6 @@ function Task({ task, empty, removedData }) {
     // Show/Close Modal
     const showCloseModal = () => {
         setModalVisible(false);
-        // If last mode was edit, change to initial and set edit false
-        if (edit) {
-            setModalContent(taskModal);
-            setEdit(false);
-        }
     };
 
     // Shared values
@@ -115,34 +109,11 @@ function Task({ task, empty, removedData }) {
     };
 
     // Edit handler
-    const editHandler = (data) => {
-        if (data === true) {
-            setEdit(true);
-        }
+    const editHandler = () => {
+        showCloseModal()
+        setEditMode(true);
+        setEditTask(task);
     };
-
-    useEffect(() => {
-        if (edit) {
-            setModalVisible(false);
-            setTimeout(() => {
-                setModalContent(addModal);
-                setModalVisible(true);
-            }, 250);
-        } else {
-            setModalContent(taskModal);
-        }
-    }, [edit]);
-
-    const taskModal = (
-        <TaskModal
-            task={task}
-            closeModal={showCloseModal}
-            slideOutAnimation={slideoutAnimation}
-            edit={editHandler}
-        />
-    );
-
-    const addModal = <AddTaskModal closeModal={showCloseModal} task={task} edit={true} />;
 
     if (empty) {
         return (
@@ -159,9 +130,16 @@ function Task({ task, empty, removedData }) {
                     visible={modalVisible}
                 >
                     <SafeAreaProvider>
-                        <SafeAreaView>
-                            <View style={styles.modalView}>{modalContent}</View>
-                        </SafeAreaView>
+                        <View>
+                            <View style={styles.modalView}>
+                                <TaskModal
+                                    task={task}
+                                    closeModal={showCloseModal}
+                                    slideOutAnimation={slideoutAnimation}
+                                    edit={editHandler}
+                                />
+                            </View>
+                        </View>
                     </SafeAreaProvider>
                 </Modal>
                 <Animated.View style={[styles.root, slideoutAnimationStyle]}>
