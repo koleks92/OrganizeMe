@@ -17,7 +17,7 @@ const OrganizeMeProvider = ({ children }) => {
             setOldTaskId(null);
             setOldTask(false);
         }
-    }
+    };
 
     const newTaskHandler = (task) => {
         if (task) {
@@ -27,15 +27,26 @@ const OrganizeMeProvider = ({ children }) => {
             setNewTaskData(null);
             setNewTask(false);
         }
-    } 
+    };
 
     return (
-        <OrganizeMeContext.Provider value={{ newTaskData, newTaskHandler, newTask, setNewTask, setNewTaskData,
-            oldTask, setOldTask, oldTaskHandler, setOldTaskId, oldTaskId
-         }}>
+        <OrganizeMeContext.Provider
+            value={{
+                newTaskData,
+                newTaskHandler,
+                newTask,
+                setNewTask,
+                setNewTaskData,
+                oldTask,
+                setOldTask,
+                oldTaskHandler,
+                setOldTaskId,
+                oldTaskId,
+            }}
+        >
             {children}
         </OrganizeMeContext.Provider>
-    )
-}
+    );
+};
 
 export default OrganizeMeProvider;
