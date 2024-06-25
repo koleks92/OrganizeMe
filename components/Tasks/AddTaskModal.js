@@ -197,6 +197,8 @@ function AddTaskModal({ closeModal, task, edit }) {
                         ]}
                         placeholder="Enter name"
                         placeholderTextColor={Colors.darkGreen}
+                        selectionColor={Colors.darkGreen}
+                        underlineColorAndroid="transparent"
                     />
                 </View>
                 {/* Shop input */}
@@ -207,6 +209,8 @@ function AddTaskModal({ closeModal, task, edit }) {
                         style={[styles.selectInput, styles.textInput]}
                         placeholder="Enter shop (optional)"
                         placeholderTextColor={Colors.darkGreen}
+                        selectionColor={Colors.darkGreen}
+                        underlineColorAndroid="transparent"
                     />
                 </View>
                 {/* Extra input */}
@@ -218,6 +222,8 @@ function AddTaskModal({ closeModal, task, edit }) {
                         placeholder="Extra info (optional)"
                         multiline={true}
                         placeholderTextColor={Colors.darkGreen}
+                        selectionColor={Colors.darkGreen}
+                        underlineColorAndroid="transparent"
                     />
                 </View>
             </MainViewModal>
