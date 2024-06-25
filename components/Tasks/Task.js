@@ -130,7 +130,7 @@ function Task({ task, empty, removedData }) {
                     visible={modalVisible}
                 >
                     <SafeAreaProvider>
-                        <View>
+                        <SafeAreaView>
                             <View style={styles.modalView}>
                                 <TaskModal
                                     task={task}
@@ -139,7 +139,7 @@ function Task({ task, empty, removedData }) {
                                     edit={editHandler}
                                 />
                             </View>
-                        </View>
+                        </SafeAreaView>
                     </SafeAreaProvider>
                 </Modal>
                 <Animated.View style={[styles.root, slideoutAnimationStyle]}>
