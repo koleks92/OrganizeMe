@@ -2,7 +2,7 @@
 
 import { DrawerActions, useIsFocused } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import { Modal, StyleSheet, View} from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Background from "../components/UI/Background";
 import { useContext, useEffect, useState } from "react";
@@ -17,34 +17,34 @@ import { Colors } from "../constants/Colors";
 import { useFonts } from "expo-font";
 import Loading from "../components/UI/Loading";
 import { OrganizeMeContext } from "../store/Context";
-
+import TestModal from "../components/Tasks/TestModal";
 
 function Index() {
     // Context for edit mode
-    const { editMode, editTask, setEditMode, setEditTask } = useContext(OrganizeMeContext);
-    const [ task, setTask ] = useState(null);
+    const { editMode, editTask, setEditMode, setEditTask } =
+        useContext(OrganizeMeContext);
+    const [task, setTask] = useState(null);
 
     // Load fonts
     const [fontsLoaded, fontError] = useFonts({
         RobotoMono: require("../assets/fonts/Roboto_Mono/RobotoMono.ttf"),
     });
 
-    // Focused view 
+    // Focused view
     const isFocused = useIsFocused();
 
     const [focused, setFocused] = useState(false);
-    
-    useEffect(() => {
-        setFocused(isFocused)
-    }, [isFocused]);
 
+    useEffect(() => {
+        setFocused(isFocused);
+    }, [isFocused]);
 
     useEffect(() => {
         if (editMode == true) {
             setTask(editTask);
-            showCloseModal()
+            showCloseModal();
         }
-    }, [editMode])
+    }, [editMode]);
 
     // Add task modal visible state
     const [modalVisible, setModalVisible] = useState(false);
@@ -65,7 +65,6 @@ function Index() {
         setModalVisible(!modalVisible);
     };
 
-
     // Render loading or error state if fonts are not loaded
     if (!fontsLoaded) {
         return <Loading />;
@@ -76,40 +75,43 @@ function Index() {
     }
 
     return (
-        <Background>
-            <SafeAreaView>
-                {/* Modal */}
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                >
-                    <SafeAreaProvider>
-                        <SafeAreaView>
-                            <View style={styles.modalView}>
-                                <AddTaskModal closeModal={showCloseModal} task={task} edit={editMode}/>
-                            </View>
-                        </SafeAreaView>
-                    </SafeAreaProvider>
-                </Modal>
-                <Top>
-                    {/*  Side menu */}
-                    <ButtonCustom onPress={openDrawer}>
-                        <MenuButton size={Sizes.topButtonSize} />
-                    </ButtonCustom>
-                    {/* Add task */}
-                    <ButtonCustom onPress={showCloseModal}>
-                        <Ionicons
-                            name="add-circle-outline"
-                            size={Sizes.topButtonSize}
-                            color={Colors.darkGreen}
-                        />
-                    </ButtonCustom>
-                </Top>
-                {/* All Tasks Component */}
-                <AllTasks focused={focused} />
-            </SafeAreaView>
-        </Background>
+        <>
+            {/* Modal */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+            >
+                <SafeAreaProvider>
+                    <SafeAreaView>
+                        <View style={styles.modalView}>
+                            <TestModal showClose={showCloseModal} />
+                            {/* <AddTaskModal closeModal={showCloseModal} task={task} edit={editMode}/> */}
+                        </View>
+                    </SafeAreaView>
+                </SafeAreaProvider>
+            </Modal>
+            <Background>
+                <SafeAreaView>
+                    <Top>
+                        {/*  Side menu */}
+                        <ButtonCustom onPress={openDrawer}>
+                            <MenuButton size={Sizes.topButtonSize} />
+                        </ButtonCustom>
+                        {/* Add task */}
+                        <ButtonCustom onPress={showCloseModal}>
+                            <Ionicons
+                                name="add-circle-outline"
+                                size={Sizes.topButtonSize}
+                                color={Colors.darkGreen}
+                            />
+                        </ButtonCustom>
+                    </Top>
+                    {/* All Tasks Component */}
+                    <AllTasks focused={focused} />
+                </SafeAreaView>
+            </Background>
+        </>
     );
 }
 
