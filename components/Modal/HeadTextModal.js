@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         fontFamily: "RobotoMono",
         fontWeight: "bold",
         color: Colors.warmWhite,
-        textAlign: 'center'
+        textAlign: "center",
     },
     headTextView: {
         flex: 1,

@@ -15,7 +15,8 @@ import MainViewModal from "../Modal/MainViewModal";
 
 function AddTaskModal({ closeModal, task, edit }) {
     // Context state
-    const { newTaskHandler, oldTaskHandler, setEditMode, setEditTask } = useContext(OrganizeMeContext);
+    const { newTaskHandler, oldTaskHandler, setEditMode, setEditTask } =
+        useContext(OrganizeMeContext);
 
     // State
     const [selectedType, setSelectedType] = useState(null);
@@ -38,6 +39,7 @@ function AddTaskModal({ closeModal, task, edit }) {
         { label: "Check", value: "check" },
     ];
 
+    // Head text for modal variable
     let headText = "New Task";
     if (edit) {
         headText = "Edit Task";
@@ -102,12 +104,14 @@ function AddTaskModal({ closeModal, task, edit }) {
                 completed: result.data.completed,
             };
 
+            // Animation handlers
             oldTaskHandler(task.id);
 
             setTimeout(() => {
                 newTaskHandler(task);
             }, 1000);
 
+            // Final setters
             closeModal();
             setEditMode(false);
             setEditTask(null);

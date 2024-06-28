@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { getAllTasks } from "../../services/api";
 import { useEffect, useState } from "react";
 import TaskGroup from "./TasksGroup";
@@ -43,19 +43,21 @@ function AllTasks({ focused }) {
         }
     }
 
+    // Check if focused == reload tasks
     useEffect(() => {
         if (focused) {
             fetchTasks();
         }
     }, [focused]);
 
+    // Arrays of tasks
     const doTasks = tasks.filter((task) => task.type == "do");
     const buyTasks = tasks.filter((task) => task.type == "buy");
     const sellTasks = tasks.filter((task) => task.type == "sell");
     const checkTasks = tasks.filter((task) => task.type == "check");
 
     if (tasksLoading) {
-        return(
+        return (
             <View style={styles.root}>
                 <Loading />
             </View>
@@ -77,5 +79,5 @@ export default AllTasks;
 const styles = StyleSheet.create({
     root: {
         margin: Sizes.marginMainView,
-    }
+    },
 });

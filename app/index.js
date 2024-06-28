@@ -38,6 +38,7 @@ function Index() {
         setFocused(isFocused);
     }, [isFocused]);
 
+    // Edit mode setter
     useEffect(() => {
         if (editMode == true) {
             setTask(editTask);
@@ -84,11 +85,16 @@ function Index() {
                 <SafeAreaProvider>
                     <SafeAreaView>
                         <View style={styles.modalView}>
-                            <AddTaskModal closeModal={showCloseModal} task={task} edit={editMode}/>
+                            <AddTaskModal
+                                closeModal={showCloseModal}
+                                task={task}
+                                edit={editMode}
+                            />
                         </View>
                     </SafeAreaView>
                 </SafeAreaProvider>
             </Modal>
+            {/* Index view */}
             <Background>
                 <SafeAreaView>
                     <Top>
@@ -118,6 +124,6 @@ export default Index;
 const styles = StyleSheet.create({
     modalView: {
         marginTop: Sizes.topOptionsHeight,
-        alignItems: "center"
+        alignItems: "center",
     },
 });

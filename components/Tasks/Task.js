@@ -49,6 +49,7 @@ function Task({ task, empty, removedData }) {
         };
     });
 
+    // Slideout animation style
     const slideoutAnimationStyle = useAnimatedStyle(() => {
         return {
             transform: [{ translateX: translateX.value }],
@@ -70,6 +71,7 @@ function Task({ task, empty, removedData }) {
         );
     };
 
+    // Slideout animation
     const slideoutAnimation = () => {
         opacity.value = withTiming(0);
 
@@ -110,7 +112,7 @@ function Task({ task, empty, removedData }) {
 
     // Edit handler
     const editHandler = () => {
-        showCloseModal()
+        showCloseModal();
         setEditTask(task);
         setEditMode(true);
     };
@@ -124,6 +126,7 @@ function Task({ task, empty, removedData }) {
     } else {
         return (
             <>
+                {/* Modal */}
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -142,6 +145,7 @@ function Task({ task, empty, removedData }) {
                         </SafeAreaView>
                     </SafeAreaProvider>
                 </Modal>
+                {/* Task view */}
                 <Animated.View style={[styles.root, slideoutAnimationStyle]}>
                     <Pressable
                         style={styles.namePressable}

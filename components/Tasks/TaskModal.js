@@ -9,10 +9,8 @@ import ButtonCustom from "../UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
 import { deleteTask } from "../../services/api";
 import MainViewModal from "../Modal/MainViewModal";
-import { useState } from "react";
 
 function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
-
     // Handler for delete button
     const deleteHandler = async () => {
         try {
@@ -27,7 +25,7 @@ function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
     // Edit handler
     const editHandler = () => {
         edit(true);
-    }
+    };
 
     // Type name converter
     const type =
@@ -58,8 +56,9 @@ function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
     }
     return (
         <CustomModal>
+            {/* Top view container */}
             <ModalTopViewBar>
-            <ButtonCustom onPress={editHandler}>
+                <ButtonCustom onPress={editHandler}>
                     <Ionicons
                         name="create-outline"
                         size={Sizes.topButtonSize * 0.9}
@@ -69,6 +68,7 @@ function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
                 <HeadTextModal>{task.name}</HeadTextModal>
                 <CloseButton onPress={closeModal} />
             </ModalTopViewBar>
+            {/* Main view conatiner */}
             <MainViewModal>
                 <View style={styles.doubleView}>
                     <Text style={styles.titleText}>Type</Text>
@@ -95,6 +95,7 @@ function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
                     </View>
                 </View>
             </MainViewModal>
+            {/* Bottom view container */}
             <ModalTopViewBar>
                 <View></View>
                 <ButtonCustom onPress={deleteHandler}>
@@ -104,9 +105,8 @@ function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
                         color={Colors.darkGreen}
                     />
                 </ButtonCustom>
-                
                 <View></View>
-                </ModalTopViewBar>
+            </ModalTopViewBar>
         </CustomModal>
     );
 }
@@ -127,9 +127,9 @@ const styles = StyleSheet.create({
     },
     doubleView: {
         padding: Sizes.scrW * 0.02,
-        borderColor: Colors.darkGreen
+        borderColor: Colors.darkGreen,
     },
     singleView: {
-        paddingHorizontal: Sizes.scrW * 0.03
-    }
+        paddingHorizontal: Sizes.scrW * 0.03,
+    },
 });

@@ -1,6 +1,5 @@
-import { Pressable, StyleSheet, Text, Dimensions } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 
-const scrW = Dimensions.get("screen").width;
 
 function ButtonCustom({ children, onPress }) {
     return (

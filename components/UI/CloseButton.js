@@ -15,5 +15,3 @@ function CloseButton({ onPress }) {
     );
 }
 export default CloseButton;
-
-
