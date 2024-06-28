@@ -1,12 +1,12 @@
 import { StyleSheet, View } from "react-native";
-import { getAllTasks } from "../../services/api";
+import { getAllHistory, getAllTasks } from "../../services/api";
 import { useEffect, useState } from "react";
 import TaskGroup from "./TasksGroup";
 import { Sizes } from "../../constants/Sizes";
 import { ScrollView } from "react-native-gesture-handler";
 import Loading from "../UI/Loading";
 
-function AllTasks({ focused }) {
+function AllTasks({ focused, history }) {
     const [tasks, setTasks] = useState([]);
     const [tasksLoading, setTasksLoading] = useState(false);
 
@@ -17,7 +17,12 @@ function AllTasks({ focused }) {
             setTasksLoading(true);
 
             // Fetch tasks
-            const fetchedTasks = await getAllTasks();
+            let fetchedTasks;
+            if (history) {
+                fetchedTasks = await getAllHistory();
+            } else {
+                fetchedTasks = await getAllTasks();
+            }
 
             let formattedTasks = [];
 
