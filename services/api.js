@@ -35,7 +35,7 @@ export async function getAllTasks() {
 export async function getAllHistory() {
     try {
         const response = await axios.get(urlHistory);
-        console.log(response);
+        return response.data;
     } catch (error) {
         console.error("Error: ", error);
     }
