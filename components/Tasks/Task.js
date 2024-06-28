@@ -117,6 +117,30 @@ function Task({ task, empty, removedData }) {
         setEditMode(true);
     };
 
+    // Checkmark component
+    let checkmark = (
+        <Pressable
+            onPress={() => {
+                checkmarkPressHandler(task);
+            }}
+        >
+            <Animated.View style={checkmarkAnimationStyle}>
+                <Ionicons
+                    name={markName}
+                    size={Sizes.scrH * 0.04}
+                    color={Colors.darkGreen}
+                />
+            </Animated.View>
+        </Pressable>
+    );
+
+    // History mode
+    if (task) {
+        if (task.completed) {
+            checkmark = <></>;
+        }
+    }
+
     if (empty) {
         return (
             <View style={[styles.root, styles.empty]}>
@@ -161,19 +185,7 @@ function Task({ task, empty, removedData }) {
                             {task.name}
                         </Text>
                     </Pressable>
-                    <Pressable
-                        onPress={() => {
-                            checkmarkPressHandler(task);
-                        }}
-                    >
-                        <Animated.View style={checkmarkAnimationStyle}>
-                            <Ionicons
-                                name={markName}
-                                size={Sizes.scrH * 0.04}
-                                color={Colors.darkGreen}
-                            />
-                        </Animated.View>
-                    </Pressable>
+                    {checkmark}
                 </Animated.View>
             </>
         );
