@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
 import Task from "./Task";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
@@ -43,13 +43,18 @@ function TaskGroup({ type, initialTasks }) {
                 setTasksToRender([<Task empty={true} key="empty" />]);
             } else {
                 setTasksToRender(
-                    tasks.map((task) => (
-                        <Task
-                            task={task}
-                            key={task.id}
-                            removedData={removedData}
-                        />
-                    ))
+                    // tasks.map((task) => (
+                    //     <Task
+                    //         task={task}
+                    //         key={task.id}
+                    //         removedData={removedData}
+                    //     />
+                    // ))
+                    <FlatList 
+                        data={tasks}
+                        renderItem={({ item }) => <Task task={item} key={item.id} removedData={removedData} />}
+                        keyExtractor={item => item.id}
+                    />
                 );
             }
         },
