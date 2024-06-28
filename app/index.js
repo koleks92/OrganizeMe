@@ -85,8 +85,7 @@ function Index() {
                 <SafeAreaProvider>
                     <SafeAreaView>
                         <View style={styles.modalView}>
-                            <TestModal showClose={showCloseModal} />
-                            {/* <AddTaskModal closeModal={showCloseModal} task={task} edit={editMode}/> */}
+                            <AddTaskModal closeModal={showCloseModal} task={task} edit={editMode}/>
                         </View>
                     </SafeAreaView>
                 </SafeAreaProvider>
@@ -119,8 +118,7 @@ export default Index;
 
 const styles = StyleSheet.create({
     modalView: {
-        flex: 1,
         marginTop: Sizes.topOptionsHeight,
-        alignItems: "center",
+        alignItems: "center"
     },
 });
