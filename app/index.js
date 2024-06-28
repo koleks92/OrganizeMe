@@ -17,7 +17,6 @@ import { Colors } from "../constants/Colors";
 import { useFonts } from "expo-font";
 import Loading from "../components/UI/Loading";
 import { OrganizeMeContext } from "../store/Context";
-import TestModal from "../components/Tasks/TestModal";
 
 function Index() {
     // Context for edit mode
