@@ -54,17 +54,26 @@ function TaskModal({ task, closeModal, slideOutAnimation, edit }) {
     } else {
         completed = "No";
     }
+
+    // History mode
+    let historyMode = false;
+    if (task.completed) {
+        historyMode = true;
+    }
+
     return (
         <CustomModal>
             {/* Top view container */}
             <ModalTopViewBar>
-                <ButtonCustom onPress={editHandler}>
-                    <Ionicons
-                        name="create-outline"
-                        size={Sizes.topButtonSize * 0.9}
-                        color={Colors.darkGreen}
-                    />
-                </ButtonCustom>
+                <View>
+                    <ButtonCustom onPress={editHandler} history={historyMode}>
+                        <Ionicons
+                            name="create-outline"
+                            size={Sizes.topButtonSize * 0.9}
+                            color={Colors.darkGreen}
+                        />
+                    </ButtonCustom>
+                </View>
                 <HeadTextModal>{task.name}</HeadTextModal>
                 <CloseButton onPress={closeModal} />
             </ModalTopViewBar>
