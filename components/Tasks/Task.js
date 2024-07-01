@@ -170,23 +170,27 @@ function Task({ task, empty, removedData }) {
                     </SafeAreaProvider>
                 </Modal>
                 {/* Task view */}
-                <Animated.View style={[styles.root, slideoutAnimationStyle]}>
-                    <Pressable
-                        style={styles.namePressable}
-                        onPress={() => {
-                            taskPressHandler(task);
-                        }}
+                <View style={styles.shadowWrapper}>
+                    <Animated.View
+                        style={[styles.root, slideoutAnimationStyle]}
                     >
-                        <Text
-                            style={styles.text}
-                            numberOfLines={1}
-                            ellipsizeMode="tail"
+                        <Pressable
+                            style={styles.namePressable}
+                            onPress={() => {
+                                taskPressHandler(task);
+                            }}
                         >
-                            {task.name}
-                        </Text>
-                    </Pressable>
-                    {checkmark}
-                </Animated.View>
+                            <Text
+                                style={styles.text}
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                            >
+                                {task.name}
+                            </Text>
+                        </Pressable>
+                        {checkmark}
+                    </Animated.View>
+                </View>
             </>
         );
     }
@@ -195,13 +199,15 @@ function Task({ task, empty, removedData }) {
 export default Task;
 
 const styles = StyleSheet.create({
-    root: {
-        shadowColor: "#000",
+    shadowWrapper: {
+        shadowColor: "#000000",
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.5,
         shadowRadius: 2,
-        elevation: 2,
-        marginVertical: Sizes.taskVerticalMargin,
+    },
+    root: {
+        margin: Sizes.tasksViewMP,
+        elevation: 5,
         height: Sizes.taskSmallHeight,
         borderColor: Colors.darkGreen,
         borderRadius: Sizes.scrW * 0.02,
