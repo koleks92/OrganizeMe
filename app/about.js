@@ -19,12 +19,14 @@ function About() {
         navigation.dispatch(DrawerActions.openDrawer());
     };
 
+    // Open a link
     const openLink = (link) => {
         Linking.openURL(link).catch((err) =>
             console.error("Couldn't load page", err)
         );
     };
 
+    // Open mail app
     const openMail = (mail) => {
         Linking.openURL(`mailto:${mail}`).catch((err) =>
             console.error("Failed to open email client", err)
@@ -39,12 +41,14 @@ function About() {
                         <MenuButton size={Sizes.topButtonSize} />
                     </ButtonCustom>
                 </Top>
+                {/* First section */}
                 <View style={styles.container}>
                     <Text style={styles.textStyleSmall}>created by:</Text>
                     <Text style={styles.textStyleBig}>
                         Jan Sebastian Konieczek
                     </Text>
                 </View>
+                {/* Second section / links */}
                 <View style={styles.container}>
                     <Text style={styles.textStyleSmall}>contact:</Text>
                     <View style={styles.linksContainer}>
