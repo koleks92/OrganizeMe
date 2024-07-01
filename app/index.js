@@ -17,6 +17,7 @@ import { Colors } from "../constants/Colors";
 import { useFonts } from "expo-font";
 import Loading from "../components/UI/Loading";
 import { OrganizeMeContext } from "../store/Context";
+import TitleText from "../components/UI/TitleText";
 
 function Index() {
     // Context for edit mode
@@ -102,6 +103,7 @@ function Index() {
                         <ButtonCustom onPress={openDrawer}>
                             <MenuButton size={Sizes.topButtonSize} />
                         </ButtonCustom>
+                        <TitleText>Tasks</TitleText>
                         {/* Add task */}
                         <ButtonCustom onPress={showCloseModal}>
                             <Ionicons

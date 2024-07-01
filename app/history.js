@@ -9,6 +9,7 @@ import { Sizes } from "../constants/Sizes";
 import AllTasks from "../components/Tasks/AllTasks";
 import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import TitleText from "../components/UI/TitleText";
 
 function History() {
     // Focused view
@@ -33,6 +34,10 @@ function History() {
                     <ButtonCustom onPress={openDrawer}>
                         <MenuButton size={Sizes.topButtonSize} />
                     </ButtonCustom>
+                    <TitleText>History</TitleText>
+                    <View style={styles.hidden}>
+                        <MenuButton size={Sizes.topButtonSize} />
+                    </View>
                 </Top>
                 <View style={styles.allTasksContainer}>
                     <AllTasks focused={focused} history={true} />
@@ -51,4 +56,7 @@ const styles = StyleSheet.create({
     allTasksContainer: {
         flex: 1,
     },
+    hidden: {
+        opacity: 0
+    }
 });

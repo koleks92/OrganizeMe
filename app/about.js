@@ -12,6 +12,7 @@ import { Sizes } from "../constants/Sizes";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import * as Linking from "expo-linking"; // Importing Linking from expo-linking
+import TitleText from "../components/UI/TitleText";
 
 function About() {
     const navigation = useNavigation();
@@ -40,6 +41,10 @@ function About() {
                     <ButtonCustom onPress={openDrawer}>
                         <MenuButton size={Sizes.topButtonSize} />
                     </ButtonCustom>
+                    <TitleText>About</TitleText>
+                    <View style={styles.hidden}>
+                        <MenuButton size={Sizes.topButtonSize} />
+                    </View>
                 </Top>
                 {/* First section */}
                 <View style={styles.container}>
@@ -115,4 +120,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginHorizontal: Sizes.marginMainView,
     },
+    hidden: {
+        opacity: 0
+    }
 });
