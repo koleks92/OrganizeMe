@@ -1,5 +1,3 @@
-// History page with tasks that was marked as done
-
 import { DrawerActions, useIsFocused } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,16 +8,17 @@ import MenuButton from "../components/UI/MenuButton";
 import { Sizes } from "../constants/Sizes";
 import AllTasks from "../components/Tasks/AllTasks";
 import { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 
 function History() {
-        // Focused view
-        const isFocused = useIsFocused();
+    // Focused view
+    const isFocused = useIsFocused();
 
-        const [focused, setFocused] = useState(false);
-    
-        useEffect(() => {
-            setFocused(isFocused);
-        }, [isFocused]);
+    const [focused, setFocused] = useState(false);
+
+    useEffect(() => {
+        setFocused(isFocused);
+    }, [isFocused]);
 
     // Open side menu
     const navigation = useNavigation();
@@ -27,19 +26,29 @@ function History() {
         navigation.dispatch(DrawerActions.openDrawer());
     };
 
-
     return (
         <Background>
-            <SafeAreaView>
+            <SafeAreaView style={styles.safeArea}>
                 <Top>
                     <ButtonCustom onPress={openDrawer}>
                         <MenuButton size={Sizes.topButtonSize} />
                     </ButtonCustom>
                 </Top>
-                <AllTasks focused={focused} history={true} />
+                <View style={styles.allTasksContainer}>
+                    <AllTasks focused={focused} history={true} />
+                </View>
             </SafeAreaView>
         </Background>
     );
 }
 
 export default History;
+
+const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+    },
+    allTasksContainer: {
+        flex: 1,
+    },
+});

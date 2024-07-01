@@ -96,7 +96,7 @@ function Index() {
             </Modal>
             {/* Index view */}
             <Background>
-                <SafeAreaView>
+                <SafeAreaView style={styles.safeArea}>
                     <Top>
                         {/*  Side menu */}
                         <ButtonCustom onPress={openDrawer}>
@@ -112,7 +112,9 @@ function Index() {
                         </ButtonCustom>
                     </Top>
                     {/* All Tasks Component */}
-                    <AllTasks focused={focused} />
+                    <View style={styles.allTasksContainer}>
+                        <AllTasks focused={focused} />
+                    </View>
                 </SafeAreaView>
             </Background>
         </>
@@ -125,5 +127,11 @@ const styles = StyleSheet.create({
     modalView: {
         marginTop: Sizes.topOptionsHeight,
         alignItems: "center",
+    },
+    safeArea: {
+        flex: 1,
+    },
+    allTasksContainer: {
+        flex: 1,
     },
 });
