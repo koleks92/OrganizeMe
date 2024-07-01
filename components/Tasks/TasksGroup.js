@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    Pressable,
+    FlatList,
+    ScrollView,
+} from "react-native";
 import Task from "./Task";
 import { Colors } from "../../constants/Colors";
 import { Sizes } from "../../constants/Sizes";
@@ -14,8 +21,14 @@ import { OrganizeMeContext } from "../../store/Context";
 
 function TaskGroup({ type, initialTasks }) {
     // Context state
-    const { newTask, newTaskData, newTaskHandler, oldTaskId, oldTask, oldTaskHandler } =
-        useContext(OrganizeMeContext);
+    const {
+        newTask,
+        newTaskData,
+        newTaskHandler,
+        oldTaskId,
+        oldTask,
+        oldTaskHandler,
+    } = useContext(OrganizeMeContext);
 
     // useState
     const [tasksOpen, setTasksOpen] = useState(false);
@@ -31,7 +44,7 @@ function TaskGroup({ type, initialTasks }) {
     const calculateHeightMax = useCallback((length) => {
         return (
             Sizes.taskSmallHeight * (length === 0 ? 1 : length) +
-            Sizes.tasksViewMP +
+            Sizes.tasksViewMP * 2 +
             Sizes.taskVerticalMargin * (length === 0 ? 0 : length * 2)
         );
     }, []);
@@ -50,10 +63,18 @@ function TaskGroup({ type, initialTasks }) {
                     //         removedData={removedData}
                     //     />
                     // ))
-                    <FlatList 
+                    <FlatList
+                        nestedScrollEnabled={true}
+                        scrollEnabled={false}
                         data={tasks}
-                        renderItem={({ item }) => <Task task={item} key={item.id} removedData={removedData} />}
-                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => (
+                            <Task
+                                task={item}
+                                key={item.id}
+                                removedData={removedData}
+                            />
+                        )}
+                        keyExtractor={(item) => item.id}
                     />
                 );
             }
@@ -92,13 +113,15 @@ function TaskGroup({ type, initialTasks }) {
         // Update tasks array
         if (oldTask) {
             setTasks((prevTasks) => {
-                const updatedTasks = prevTasks.filter((task) => task.id !== oldTaskId);
+                const updatedTasks = prevTasks.filter(
+                    (task) => task.id !== oldTaskId
+                );
                 createTasksToRender(updatedTasks);
                 return updatedTasks;
             });
-            oldTaskHandler()
+            oldTaskHandler();
         }
-    }, [oldTask])
+    }, [oldTask]);
 
     // Create new array of tasks to render, when tasks state changes
     useEffect(() => {
@@ -155,11 +178,15 @@ function TaskGroup({ type, initialTasks }) {
                     />
                 </Animated.View>
             </Pressable>
-            <View>
-                <Animated.View style={[styles.tasksView, slidingStyle]}>
-                    {tasksToRender}
-                </Animated.View>
-            </View>
+            <Animated.View
+                style={[
+                    styles.tasksView,
+                    slidingStyle,
+                    !tasksOpen && styles.closeView,
+                ]}
+            >   
+                {tasksToRender}
+            </Animated.View>
         </View>
     );
 }
@@ -167,6 +194,9 @@ function TaskGroup({ type, initialTasks }) {
 export default TaskGroup;
 
 const styles = StyleSheet.create({
+    closeView: {
+        marginBottom: Sizes.tasksViewMP,
+    },
     typeView: {
         marginHorizontal: 2,
         shadowColor: "#000",
@@ -194,6 +224,5 @@ const styles = StyleSheet.create({
         top: -1,
         zIndex: 3,
         marginHorizontal: Sizes.scrW * 0.03,
-        marginBottom: Sizes.tasksViewMP,
     },
 });
