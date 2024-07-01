@@ -144,7 +144,7 @@ function Task({ task, empty, removedData }) {
     if (empty) {
         return (
             <View style={[styles.root, styles.empty]}>
-                <Text style={styles.text}>There are no tasks :(</Text>
+                <Text style={styles.text}>Empty :(</Text>
             </View>
         );
     } else {
@@ -225,6 +225,8 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0,
         shadowRadius: 0,
+        justifyContent: 'center',
+        margin: 0
     },
     namePressable: {
         flex: 1,
